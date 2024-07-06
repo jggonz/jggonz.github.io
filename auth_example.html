@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Example</title>
+    <script>
+        function handleAuth() {
+            const authUrl = "https://your-authentication-url.com";
+            if (window.parent) {
+                window.parent.openAuthModal(authUrl);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button onclick="handleAuth()">Authenticate</button>
+    </div>
+</body>
+</html>
