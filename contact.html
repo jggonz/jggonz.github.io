@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Landing Page</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="relative">
+    <!-- Fixed Navbar -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Left Side: Logo and Tabs -->
+                <div class="flex items-center">
+                    <!-- Logo Placeholder -->
+                    <a href="#" class="flex-shrink-0">
+                        <img class="h-8 w-8" src="logo.gif" alt="Logo">
+                    </a>
+                    <!-- Tabs -->
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="classes.html" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Classes</a>
+                        <a href="appointments.html" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Appointments</a>
+                        <a href="contact.html" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Contact Us</a>
+                    </div>
+                </div>
+                <!-- Right Side: Create Account and Login -->
+                <div class="flex items-center space-x-4">
+                    <a href="create-account.html" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Create Account</a>
+                    <a href="#" id="loginLink" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-20">
+        <div class="max-w-5xl mx-auto">
+            <!-- Placeholder Div -->
+            <div class="bg-white-100 p-8 mt-8 rounded-lg">
+              <script src="https://widgets.mindbodyonline.com/javascripts/healcode.js" type="text/javascript"></script>
+              <healcode-widget data-type="prospects" data-widget-partner="object" data-widget-id="05529274ffa" data-widget-version="0" ></healcode-widget>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    // JavaScript to open the popup window when "Login" is clicked
+    document.getElementById('loginLink').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+
+        // URL to open in the popup window
+        var popupUrl = 'https://signin.mindbodyonline.com/signin?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3DMindbody.BrandedWeb.Legacy%26scope%3Dopenid%2520profile%2520email%2520offline_access%2520Mindbody.Api.Connect%2520Mindbody.Api.Payments%2520Mindbody.Api.Rest%2520Mindbody.Identity.UserGateway%2520Identity.Legacy.Gateway%26response_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Fbrandedweb.mindbodyonline.com%252Fcomponents%252Fapi%252Fauth-complete%26response_mode%3Dform_post%26state%3D7qF0myoGs121C5p7ZUqM3GQrGoeEkVzOD0Q6d_H_Dec';
+
+        // Open the popup window
+        window.open(
+            popupUrl,
+            'LoginWindow',
+            'width=500,height=1000,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes'
+        );
+    });
+</script>
+</html>
