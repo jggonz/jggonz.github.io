@@ -7,8 +7,8 @@
 </head>
 <body>
 
-<h1>Open Popup Example</h1>
-<p>Click the button below to open <code>sessionstorage_popup.html</code> in a 600x400 popup window.</p>
+<h1>Open Popup Example - That sets session storage again</h1>
+<p>Click the button below to open <code>sessionstorage_popup.html</code> in a 600x400 popup window, wait for the token to be generated in the popup, and then read it back here.</p>
 
 <button id="openPopupBtn">Open Popup</button>
 
@@ -36,6 +36,9 @@
                     // Check if token is still valid (not expired)
                     if (Date.now() < storedData.expires) {
                         displayDiv.textContent = "Token value from popup: " + storedData.token;
+                        
+                        // Store the token into this window's sessionStorage as "my_token"
+                        sessionStorage.setItem('my_token', storedData.token);
                     } else {
                         displayDiv.textContent = "Token from popup has expired.";
                     }
