@@ -3,28 +3,55 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-    <title>Set Cookie After Delay</title>
+    <title>Set and Read Cookie After Delay</title>
 </head>
 <body>
 
-<h1>Wait 10 seconds...</h1>
-<p>After 10 seconds, this page will set a cookie with a unique token.</p>
+<h1>Wait for it...</h1>
+<p>After 10 seconds, a cookie will be set. Then, 10 seconds after that (20 seconds total), the cookie will be read and displayed below.</p>
+
+<div id="cookieValue"></div>
 
 <script>
+    // Function to get a cookie by name
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(nameEQ) === 0) {
+                return c.substring(nameEQ.length, c.length);
+            }
+        }
+        return null;
+    }
+
     // After 10 seconds, generate a unique token and set it as a cookie.
     setTimeout(function() {
-        // Generate a unique token (e.g., timestamp + random)
+        // Generate a unique token (timestamp + random, base-36)
         var token = (Date.now().toString(36) + Math.random().toString(36).substr(2));
-
+        
         // Set cookie expiration to 7 days from now (optional)
         var expirationDate = new Date();
         expirationDate.setTime(expirationDate.getTime() + (7 * 24 * 60 * 60 * 1000));
         var expires = "expires=" + expirationDate.toUTCString();
-
+        
         // Set the cookie
         document.cookie = "unique_token=" + token + ";" + expires + ";path=/";
-
+        
         console.log("Cookie has been set: unique_token=" + token);
+        
+        // After another 10 seconds (20 seconds total), read the cookie and append it to the document.
+        setTimeout(function() {
+            var cookieVal = getCookie("unique_token");
+            if (cookieVal) {
+                var div = document.getElementById("cookieValue");
+                div.textContent = "Cookie value: " + cookieVal;
+            } else {
+                console.log("Cookie not found.");
+            }
+        }, 10000);
+        
     }, 10000);
 </script>
 
