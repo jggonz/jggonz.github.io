@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <title>Fake Fitness Website</title>
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            // Parse query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const iframeView = urlParams.get("iframe_view");
+            
+            // Determine the iframe URL
+            let iframeURL = "same_page_widget.html";
+            if (iframeView === "cart") {
+                iframeURL += "?the_view=cart";
+            }
+
+            // Set the iframe source
+            const iframeElement = document.getElementById("widget-frame");
+            iframeElement.src = iframeURL;
+        });
+    </script>
+</head>
+<body>
+    <h1>Fake Fitness Website</h1>
+    <p>This page hosts the widget in an iframe below.</p>
+    <iframe id="widget-frame" src="" width="600" height="400"></iframe>
+</body>
+</html>
