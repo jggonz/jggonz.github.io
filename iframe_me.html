@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <title>Set Cookie After Delay</title>
+</head>
+<body>
+
+<h1>Wait 10 seconds...</h1>
+<p>After 10 seconds, this page will set a cookie with a unique token.</p>
+
+<script>
+    // After 10 seconds, generate a unique token and set it as a cookie.
+    setTimeout(function() {
+        // Generate a unique token (e.g., timestamp + random)
+        var token = (Date.now().toString(36) + Math.random().toString(36).substr(2));
+
+        // Set cookie expiration to 7 days from now (optional)
+        var expirationDate = new Date();
+        expirationDate.setTime(expirationDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + expirationDate.toUTCString();
+
+        // Set the cookie
+        document.cookie = "unique_token=" + token + ";" + expires + ";path=/";
+
+        console.log("Cookie has been set: unique_token=" + token);
+    }, 10000);
+</script>
+
+</body>
+</html>
