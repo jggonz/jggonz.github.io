@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <title>Open Popup</title>
+</head>
+<body>
+
+<h1>Open Popup Example</h1>
+<p>Click the button below to open <code>sessionstorage_popup.html</code> in a 600x400 popup window.</p>
+
+<button id="openPopupBtn">Open Popup</button>
+
+<div id="tokenValue"></div>
+
+<script>
+    document.getElementById('openPopupBtn').addEventListener('click', function() {
+        // Open the popup window
+        var popup = window.open('sessionstorage_popup.html', 'popupWindow', 'width=600,height=400');
+
+        // After 20 seconds, try to read the token from the popup's sessionStorage
+        setTimeout(function() {
+            try {
+                if (popup && !popup.closed) {
+                    var storedDataStr = popup.sessionStorage.getItem('unique_token_data');
+                    var displayDiv = document.getElementById('tokenValue');
+
+                    if (!storedDataStr) {
+                        displayDiv.textContent = "No token found in popup's sessionStorage.";
+                        return;
+                    }
+
+                    var storedData = JSON.parse(storedDataStr);
+
+                    // Check if token is still valid (not expired)
+                    if (Date.now() < storedData.expires) {
+                        displayDiv.textContent = "Token value from popup: " + storedData.token;
+                    } else {
+                        displayDiv.textContent = "Token from popup has expired.";
+                    }
+                } else {
+                    console.error("Popup not available or was closed.");
+                }
+            } catch (e) {
+                console.error("Unable to read popup sessionStorage:", e);
+            }
+        }, 20000); // 20 seconds after opening the popup
+    });
+</script>
+
+</body>
+</html>
