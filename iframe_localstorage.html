@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <title>Set and Read Unique ID from LocalStorage</title>
+</head>
+<body>
+
+<h1>Wait for it...</h1>
+<p>After 10 seconds, a unique token will be stored in localStorage with a 30 second expiration. Then, 10 seconds after that (20 seconds total), the token will be read if it’s still valid and displayed below.</p>
+
+<div id="tokenValue"></div>
+
+<script>
+    // After 10 seconds, generate a unique token and store it in localStorage with expiration.
+    setTimeout(function() {
+        // Generate a unique token (timestamp + random, base-36)
+        var token = (Date.now().toString(36) + Math.random().toString(36).substr(2));
+
+        // Set expiration time to 30 seconds from now
+        var expirationTime = Date.now() + 30000; // 30,000 ms = 30 seconds
+
+        // Store the token and expiration in localStorage as a JSON object
+        var data = {
+            token: token,
+            expires: expirationTime
+        };
+        localStorage.setItem("unique_token_data", JSON.stringify(data));
+
+        console.log("LocalStorage has been set: " + JSON.stringify(data));
+
+        // After another 10 seconds (20 seconds total), read the token if it exists and not expired
+        setTimeout(function() {
+            var storedDataStr = localStorage.getItem("unique_token_data");
+            var displayDiv = document.getElementById("tokenValue");
+
+            if (!storedDataStr) {
+                // No data found
+                displayDiv.textContent = "Token not found in localStorage.";
+                return;
+            }
+
+            var storedData = JSON.parse(storedDataStr);
+
+            // Check expiration
+            if (Date.now() < storedData.expires) {
+                // Still valid
+                displayDiv.textContent = "Token value: " + storedData.token;
+            } else {
+                // Expired - remove it or leave as is
+                localStorage.removeItem("unique_token_data");
+                displayDiv.textContent = "Token has expired or is not available.";
+            }
+        }, 10000);
+
+    }, 10000);
+</script>
+
+</body>
+</html>
