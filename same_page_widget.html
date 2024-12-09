@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>The Widget</title>
+    <style>
+        .view {
+            display: none;
+        }
+        .visible {
+            display: block;
+        }
+    </style>
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const theView = urlParams.get("the_view");
+
+            const widgetView = document.getElementById("widget-view");
+            const cartView = document.getElementById("cart-view");
+
+            // Show correct view based on parameter
+            if (theView === "cart") {
+                cartView.classList.add("visible");
+            } else {
+                widgetView.classList.add("visible");
+            }
+
+            const loginBtn = document.getElementById("login-btn");
+            loginBtn.addEventListener("click", function() {
+                // Construct callback URL to return to the main page with iframe_view=cart
+                const callbackUrl = encodeURIComponent(window.location.origin + window.location.pathname.replace("same_page_widget.html","same_page_index.html") + "?iframe_view=cart");
+                
+                // Redirect to the Shared UI page with callback_url set
+                window.location.href = "same_page_sharedui.html?callback_url=" + callbackUrl;
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="widget-view" class="view">
+        <h2>The Widget View</h2>
+        <p>This is the widget's default view.</p>
+        <button id="login-btn">Log In</button>
+    </div>
+    <div id="cart-view" class="view">
+        <h2>The Cart View</h2>
+        <p>You are now viewing the cart.</p>
+        <button id="login-btn">Log In</button>
+    </div>
+</body>
+</html>
