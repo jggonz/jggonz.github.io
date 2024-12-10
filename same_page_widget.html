@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>The Widget</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .view {
             display: none;
@@ -27,28 +29,34 @@
                 widgetView.classList.add("visible");
             }
 
-            const loginBtn = document.getElementById("login-btn");
-            loginBtn.addEventListener("click", function() {
-                // Construct callback URL to return to the main page with iframe_view=cart
-                const callbackUrl = encodeURIComponent(window.location.origin + window.location.pathname.replace("same_page_widget.html","same_page_index.html") + "?iframe_view=cart");
-                
-                // Redirect to the Shared UI page with callback_url set
-                // NOTE: The redirect must happen in the parent window, not inside the iframe.
-                window.parent.location.href = "same_page_sharedui.html?callback_url=" + callbackUrl;
+            const loginBtns = document.querySelectorAll(".login-btn");
+            loginBtns.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    // Construct callback URL to return to the main page with iframe_view=cart
+                    const callbackUrl = encodeURIComponent(
+                        window.location.origin + 
+                        window.location.pathname.replace("same_page_widget.html","same_page_index.html") + 
+                        "?iframe_view=cart"
+                    );
+                    
+                    // Redirect to the Shared UI page with callback_url set
+                    // Redirect in the parent window
+                    window.parent.location.href = "same_page_sharedui.html?callback_url=" + callbackUrl;
+                });
             });
         });
     </script>
 </head>
-<body>
+<body class="bg-white p-4 text-gray-800">
     <div id="widget-view" class="view">
-        <h2>The Widget View</h2>
-        <p>This is the widget's default view.</p>
-        <button id="login-btn">Log In</button>
+        <h2 class="text-2xl font-bold mb-4">The Widget View</h2>
+        <p class="mb-6">This is the widget's default view. Browse our offerings and manage your fitness journey!</p>
+        <button class="login-btn px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Log In</button>
     </div>
     <div id="cart-view" class="view">
-        <h2>The Cart View</h2>
-        <p>You are now viewing the cart.</p>
-        <button id="login-btn">Log In</button>
+        <h2 class="text-2xl font-bold mb-4">The Cart View</h2>
+        <p class="mb-6">Your selected fitness products and classes are shown here. Complete your purchase or sign in to save your cart.</p>
+        <button class="login-btn px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Log In</button>
     </div>
 </body>
 </html>
