@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mermaid.js Gantt Chart</title>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+</head>
+<body>
+    <div class="mermaid" style="margin-top:100px;">
+        gantt
+        title Squad Cycles and Sprints 2025
+        dateFormat  MM/DD/YYYY
+
+        %% 2025 Cycles
+        section 2025 Cycles
+        2025.Q1.H1: planned, c2025q1h1, 01/01/2025, 02/11/2025
+        2025.Q1.H2: planned, c2025q1h2, 02/12/2025, 03/25/2025
+        2025.Q2.H1: planned, c2025q2h1, 03/26/2025, 05/06/2025
+        2025.Q2.H2: planned, c2025q2h2, 05/07/2025, 06/17/2025
+        2025.Q3.H1: planned, c2025q3h1, 06/18/2025, 07/29/2025
+        2025.Q3.H2: planned, c2025q3h2, 07/30/2025, 09/09/2025
+        2025.Q4.H1: planned, c2025q4h1, 09/10/2025, 10/21/2025
+        2025.Q4.H2: planned, c2025q4h2, 10/22/2025, 12/02/2025
+
+        %% 2025 Sprints
+        section Sprints 2025
+        2025-01: planned, s202501, 01/01/2025, 01/14/2025
+        2025-02: planned, s202502, 01/15/2025, 01/28/2025
+        2025-03: planned, s202503, 01/29/2025, 02/11/2025
+        2025-04: planned, s202504, 02/12/2025, 02/25/2025
+        2025-05: planned, s202505, 02/26/2025, 03/11/2025
+        2025-06: planned, s202506, 03/12/2025, 03/25/2025
+        2025-07: planned, s202507, 03/26/2025, 04/08/2025
+        2025-08: planned, s202508, 04/09/2025, 04/22/2025
+        2025-09: planned, s202509, 04/23/2025, 05/06/2025
+        2025-10: planned, s202510, 05/07/2025, 05/20/2025
+        2025-11: planned, s202511, 05/21/2025, 06/03/2025
+        2025-12: planned, s202512, 06/04/2025, 06/17/2025
+        2025-13: planned, s202513, 06/18/2025, 07/01/2025
+        2025-14: planned, s202514, 07/02/2025, 07/15/2025
+        2025-15: planned, s202515, 07/16/2025, 07/29/2025
+        2025-16: planned, s202516, 07/30/2025, 08/12/2025
+        2025-17: planned, s202517, 08/13/2025, 08/26/2025
+        2025-18: planned, s202518, 08/27/2025, 09/09/2025
+        2025-19: planned, s202519, 09/10/2025, 09/23/2025
+        2025-20: planned, s202520, 09/24/2025, 10/07/2025
+        2025-21: planned, s202521, 10/08/2025, 10/21/2025
+        2025-22: planned, s202522, 10/22/2025, 11/04/2025
+        2025-23: planned, s202523, 11/05/2025, 11/18/2025
+        2025-24: planned, s202524, 11/19/2025, 12/02/2025
+    </div>
+</body>
+</html>
