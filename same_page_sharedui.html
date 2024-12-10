@@ -4,6 +4,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>The Shared UI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         window.addEventListener("DOMContentLoaded", function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -12,7 +14,6 @@
             const authorizeBtn = document.getElementById("authorize-btn");
             authorizeBtn.addEventListener("click", function() {
                 if (callbackUrl) {
-                    // The redirect from the shared UI will typically load in the current window.
                     window.location.href = callbackUrl;
                 } else {
                     alert("No callback URL provided.");
@@ -21,9 +22,9 @@
         });
     </script>
 </head>
-<body>
-    <h1>The Shared UI</h1>
-    <p>Please authorize to continue.</p>
-    <button id="authorize-btn">Authorize me</button>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-100 to-gray-300 text-gray-800">
+    <h1 class="text-3xl font-bold mb-4">The Shared UI</h1>
+    <p class="mb-6 text-gray-700">Please authorize to continue to your cart.</p>
+    <button id="authorize-btn" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700">Authorize me</button>
 </body>
 </html>
