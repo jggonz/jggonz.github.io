@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>The Shared UI</title>
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const callbackUrl = urlParams.get("callback_url");
+
+            const authorizeBtn = document.getElementById("authorize-btn");
+            authorizeBtn.addEventListener("click", function() {
+                if (callbackUrl) {
+                    window.location.href = callbackUrl;
+                } else {
+                    alert("No callback URL provided.");
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>The Shared UI</h1>
+    <p>Please authorize to continue.</p>
+    <button id="authorize-btn">Authorize me</button>
+</body>
+</html>
