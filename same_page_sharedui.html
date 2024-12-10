@@ -12,6 +12,7 @@
             const authorizeBtn = document.getElementById("authorize-btn");
             authorizeBtn.addEventListener("click", function() {
                 if (callbackUrl) {
+                    // The redirect from the shared UI will typically load in the current window.
                     window.location.href = callbackUrl;
                 } else {
                     alert("No callback URL provided.");
