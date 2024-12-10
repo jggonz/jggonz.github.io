@@ -4,52 +4,107 @@
     <title>Mermaid.js Gantt Chart</title>
     <script type="module">
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Today's date (assume we use the client's current date)
+            const today = new Date();
+
+            // Helper function to parse MM/DD/YYYY into a Date object
+            function parseDate(mdY) {
+                const [M, D, Y] = mdY.split('/').map(num => parseInt(num, 10));
+                return new Date(Y, M - 1, D);
+            }
+
+            // Tasks Data:
+            // Each entry: { title, id, start, end, section } 
+            // "section" is either "Cycles" or "Sprints" to group them.
+            const cycles = [
+                {title: '2025.Q1.H1', id: 'des1', start: '01/02/2025', end: '02/11/2025'},
+                {title: '2025.Q1.H2', id: 'des2', start: '02/12/2025', end: '03/25/2025'},
+                {title: '2025.Q2.H1', id: 'des3', start: '03/26/2025', end: '05/06/2025'},
+                {title: '2025.Q2.H2', id: 'des4', start: '05/07/2025', end: '06/17/2025'},
+                {title: '2025.Q3.H1', id: 'des5', start: '06/18/2025', end: '07/29/2025'},
+                {title: '2025.Q3.H2', id: 'des6', start: '07/30/2025', end: '09/09/2025'},
+                {title: '2025.Q4.H1', id: 'des7', start: '09/10/2025', end: '10/21/2025'},
+                {title: '2025.Q4.H2', id: 'des8', start: '10/22/2025', end: '12/02/2025'},
+            ];
+
+            const sprints = [
+                {title: '2025-01', id: 'sprint1', start: '01/02/2025', end: '01/15/2025'},
+                {title: '2025-02', id: 'sprint2', start: '01/16/2025', end: '01/29/2025'},
+                {title: '2025-03', id: 'sprint3', start: '01/30/2025', end: '02/11/2025'},
+                {title: '2025-04', id: 'sprint4', start: '02/12/2025', end: '02/25/2025'},
+                {title: '2025-05', id: 'sprint5', start: '02/26/2025', end: '03/11/2025'},
+                {title: '2025-06', id: 'sprint6', start: '03/12/2025', end: '03/25/2025'},
+                {title: '2025-07', id: 'sprint7', start: '03/26/2025', end: '04/08/2025'},
+                {title: '2025-08', id: 'sprint8', start: '04/09/2025', end: '04/22/2025'},
+                {title: '2025-09', id: 'sprint9', start: '04/23/2025', end: '05/06/2025'},
+                {title: '2025-10', id: 'sprint10', start: '05/07/2025', end: '05/20/2025'},
+                {title: '2025-11', id: 'sprint11', start: '05/21/2025', end: '06/03/2025'},
+                {title: '2025-12', id: 'sprint12', start: '06/04/2025', end: '06/17/2025'},
+                {title: '2025-13', id: 'sprint13', start: '06/18/2025', end: '07/01/2025'},
+                {title: '2025-14', id: 'sprint14', start: '07/02/2025', end: '07/15/2025'},
+                {title: '2025-15', id: 'sprint15', start: '07/16/2025', end: '07/29/2025'},
+                {title: '2025-16', id: 'sprint16', start: '07/30/2025', end: '08/12/2025'},
+                {title: '2025-17', id: 'sprint17', start: '08/13/2025', end: '08/26/2025'},
+                {title: '2025-18', id: 'sprint18', start: '08/27/2025', end: '09/09/2025'},
+                {title: '2025-19', id: 'sprint19', start: '09/10/2025', end: '09/23/2025'},
+                {title: '2025-20', id: 'sprint20', start: '09/24/2025', end: '10/07/2025'},
+                {title: '2025-21', id: 'sprint21', start: '10/08/2025', end: '10/21/2025'},
+                {title: '2025-22', id: 'sprint22', start: '10/22/2025', end: '11/04/2025'},
+                {title: '2025-23', id: 'sprint23', start: '11/05/2025', end: '11/18/2025'},
+                {title: '2025-24', id: 'sprint24', start: '11/19/2025', end: '12/02/2025'},
+            ];
+
+            // Determine the status of each task
+            function getStatus(startStr, endStr) {
+                const startDate = parseDate(startStr);
+                const endDate = parseDate(endStr);
+
+                if (today < startDate) {
+                    return ''; // not started
+                } else if (today >= startDate && today <= endDate) {
+                    return 'active';
+                } else {
+                    return 'done';
+                }
+            }
+
+            // Build the Mermaid Gantt chart definition
+            let ganttDefinition = `
+gantt
+title Squad Cycles and Sprints 2025
+dateFormat MM/DD/YYYY
+
+section 2025 Cycles
+`;
+            cycles.forEach(cycle => {
+                const status = getStatus(cycle.start, cycle.end);
+                // Format: title: status, id, start, end
+                // If no status, omit it for that line.
+                let statusStr = status ? (status + ",") : "";
+                ganttDefinition += `${cycle.title}: ${statusStr} ${cycle.id}, ${cycle.start}, ${cycle.end}\n`;
+            });
+
+            ganttDefinition += `\nsection Sprints 2025\n`;
+
+            sprints.forEach(sprint => {
+                const status = getStatus(sprint.start, sprint.end);
+                let statusStr = status ? (status + ",") : "";
+                ganttDefinition += `${sprint.title}: ${statusStr} ${sprint.id}, ${sprint.start}, ${sprint.end}\n`;
+            });
+
+            // Insert the generated Gantt chart definition into the Mermaid container
+            const container = document.querySelector('.mermaid');
+            container.textContent = ganttDefinition;
+
+            // Initialize mermaid again to render the updated chart
+            mermaid.initialize({ startOnLoad: true });
+            mermaid.run();
+        });
     </script>
 </head>
 <body>
-    <div class="mermaid" style="margin-top:100px;">
-        gantt
-        title Squad Cycles and Sprints 2025
-        dateFormat  MM/DD/YYYY
-
-        %% 2025 Cycles
-        section 2025 Cycles
-        2025.Q1.H1: planned, c2025q1h1, 01/01/2025, 02/11/2025
-        2025.Q1.H2: planned, c2025q1h2, 02/12/2025, 03/25/2025
-        2025.Q2.H1: planned, c2025q2h1, 03/26/2025, 05/06/2025
-        2025.Q2.H2: planned, c2025q2h2, 05/07/2025, 06/17/2025
-        2025.Q3.H1: planned, c2025q3h1, 06/18/2025, 07/29/2025
-        2025.Q3.H2: planned, c2025q3h2, 07/30/2025, 09/09/2025
-        2025.Q4.H1: planned, c2025q4h1, 09/10/2025, 10/21/2025
-        2025.Q4.H2: planned, c2025q4h2, 10/22/2025, 12/02/2025
-
-        %% 2025 Sprints
-        section Sprints 2025
-        2025-01: planned, s202501, 01/01/2025, 01/14/2025
-        2025-02: planned, s202502, 01/15/2025, 01/28/2025
-        2025-03: planned, s202503, 01/29/2025, 02/11/2025
-        2025-04: planned, s202504, 02/12/2025, 02/25/2025
-        2025-05: planned, s202505, 02/26/2025, 03/11/2025
-        2025-06: planned, s202506, 03/12/2025, 03/25/2025
-        2025-07: planned, s202507, 03/26/2025, 04/08/2025
-        2025-08: planned, s202508, 04/09/2025, 04/22/2025
-        2025-09: planned, s202509, 04/23/2025, 05/06/2025
-        2025-10: planned, s202510, 05/07/2025, 05/20/2025
-        2025-11: planned, s202511, 05/21/2025, 06/03/2025
-        2025-12: planned, s202512, 06/04/2025, 06/17/2025
-        2025-13: planned, s202513, 06/18/2025, 07/01/2025
-        2025-14: planned, s202514, 07/02/2025, 07/15/2025
-        2025-15: planned, s202515, 07/16/2025, 07/29/2025
-        2025-16: planned, s202516, 07/30/2025, 08/12/2025
-        2025-17: planned, s202517, 08/13/2025, 08/26/2025
-        2025-18: planned, s202518, 08/27/2025, 09/09/2025
-        2025-19: planned, s202519, 09/10/2025, 09/23/2025
-        2025-20: planned, s202520, 09/24/2025, 10/07/2025
-        2025-21: planned, s202521, 10/08/2025, 10/21/2025
-        2025-22: planned, s202522, 10/22/2025, 11/04/2025
-        2025-23: planned, s202523, 11/05/2025, 11/18/2025
-        2025-24: planned, s202524, 11/19/2025, 12/02/2025
-    </div>
+    <div class="mermaid" style="margin-top:100px;"></div>
 </body>
 </html>
