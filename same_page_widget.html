@@ -33,7 +33,8 @@
                 const callbackUrl = encodeURIComponent(window.location.origin + window.location.pathname.replace("same_page_widget.html","same_page_index.html") + "?iframe_view=cart");
                 
                 // Redirect to the Shared UI page with callback_url set
-                window.location.href = "same_page_sharedui.html?callback_url=" + callbackUrl;
+                // NOTE: The redirect must happen in the parent window, not inside the iframe.
+                window.parent.location.href = "same_page_sharedui.html?callback_url=" + callbackUrl;
             });
         });
     </script>
