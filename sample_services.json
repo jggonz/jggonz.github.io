@@ -1,0 +1,532 @@
+{
+  "Massage & Bodywork": [
+    {
+      "name": "Swedish Relaxation Massage",
+      "duration": "60 Minutes",
+      "description": "This soothing 60-minute Swedish massage is designed to melt away tension and promote deep relaxation through gentle, flowing strokes. Ideal for those new to massage or seeking a restorative experience, this treatment increases blood circulation, enhances flexibility, and calms the nervous system, leaving you refreshed and at peace.",
+      "what_to_expect": [
+        "A brief consultation to identify focus areas and overall wellness goals",
+        "Long, gentle, gliding strokes and light to moderate pressure",
+        "An emphasis on relaxation, stress reduction, and improved circulation",
+        "A tranquil environment with soft music and calming aromatherapy"
+      ]
+    },
+    {
+      "name": "Deep Tissue Muscle Relief",
+      "duration": "60 Minutes",
+      "description": "This 60-minute deep tissue massage targets chronic muscle tension and knots by working into the deeper layers of muscle and connective tissue. Ideal for those who experience persistent discomfort from sports, repetitive stress, or desk-bound postures, this session helps release adhesions, improve range of motion, and restore comfort and ease.",
+      "what_to_expect": [
+        "A conversation to identify problem areas and measure pain levels",
+        "Firm pressure and slow strokes to access deeper muscle layers",
+        "Focus on areas prone to tightness (e.g., neck, shoulders, lower back)",
+        "Techniques to alleviate tension, enhance mobility, and facilitate long-term relief"
+      ]
+    },
+    {
+      "name": "Shiatsu Energy Balancing",
+      "duration": "45 Minutes",
+      "description": "This 45-minute shiatsu massage session uses finger pressure, stretching, and gentle joint rotations along energy meridians to promote balance and holistic well-being. Perfect for anyone feeling sluggish or out-of-sync, shiatsu supports harmony between body, mind, and spirit, assisting in relieving stress, fatigue, and subtle aches.",
+      "what_to_expect": [
+        "A brief intake to understand your energy flow and areas of imbalance",
+        "Gentle yet firm finger pressure along meridians",
+        "Stretching and mobilization to enhance energy circulation",
+        "A nurturing environment that fosters calm, balance, and restoration"
+      ]
+    },
+    {
+      "name": "Hot Stone Muscle Melt",
+      "duration": "75 Minutes",
+      "description": "This 75-minute hot stone massage uses the soothing warmth of heated, smooth basalt stones combined with flowing massage strokes to relieve deep-seated tension. Ideal for those seeking profound relaxation, enhanced circulation, and improved energy flow, this indulgent treatment leaves you feeling luxuriously calm and revitalized.",
+      "what_to_expect": [
+        "A short consultation to highlight specific areas of tension",
+        "Placement of heated stones to warm and relax muscles before massage",
+        "Light to medium pressure massage enhanced by the stone’s comforting heat",
+        "A serene atmosphere that encourages tranquility and overall well-being"
+      ]
+    },
+    {
+      "name": "Aromatherapy Stress-Release Massage",
+      "duration": "60 Minutes",
+      "description": "This 60-minute aromatherapy massage integrates carefully selected essential oils into gentle to moderate massage techniques, supporting both emotional and physical relaxation. Perfect for those dealing with anxiety, restlessness, or tension, the personalized blend of fragrances helps restore calm, uplift mood, and create a deeply soothing experience.",
+      "what_to_expect": [
+        "A brief consultation to determine preferred essential oils and desired outcomes (e.g., lavender for relaxation, eucalyptus for clarity)",
+        "Gentle, rhythmic strokes to promote relaxation and stress reduction",
+        "Inhalation of aromatic blends that complement the massage’s healing effects",
+        "A peaceful, cozy space that nurtures both body and mind"
+      ]
+    }
+  ],
+  "Yoga & Pilates": [
+    {
+      "name": "Vinyasa Flow Yoga",
+      "duration": "60 Minutes",
+      "description": "This energizing 60-minute vinyasa class is perfect for anyone seeking to build strength, improve flexibility, and find mental clarity through fluid movements linked with breath. By seamlessly transitioning through a dynamic sequence of poses, this practice promotes balance, mindfulness, and improved body awareness.",
+      "what_to_expect": [
+        "A brief consultation to discuss any injuries, goals, or preferences",
+        "Fluid, breath-synchronized postures designed to build heat and endurance",
+        "A supportive environment that encourages personal growth and inner calm"
+      ]
+    },
+    {
+      "name": "Restorative Yoga",
+      "duration": "60 Minutes",
+      "description": "This soothing 60-minute restorative yoga session is ideal for individuals looking to relieve stress, enhance relaxation, and gently restore the body’s natural harmony. Using props, gentle stretches, and prolonged poses, this class helps calm the nervous system, release tension, and foster a deep sense of tranquility.",
+      "what_to_expect": [
+        "A short intake to identify tension areas and relaxation goals",
+        "Supported poses held for several minutes to encourage profound relaxation",
+        "A serene setting with soft lighting and calming music to promote inner peace"
+      ]
+    },
+    {
+      "name": "Pilates Mat Class",
+      "duration": "45 Minutes",
+      "description": "This focused 45-minute Pilates mat class is tailored for those aiming to improve core strength, posture, and overall body alignment. By engaging deep stabilizing muscles through precise, controlled movements, Pilates helps boost stability, enhance flexibility, and create a balanced, strong foundation.",
+      "what_to_expect": [
+        "A quick chat to assess your comfort level and discuss any modifications",
+        "Targeted exercises emphasizing core activation, alignment, and controlled movement",
+        "A welcoming atmosphere encouraging proper technique, body awareness, and self-confidence"
+      ]
+    },
+    {
+      "name": "Yin Yoga",
+      "duration": "60 Minutes",
+      "description": "This calming 60-minute yin yoga practice offers a gentle, meditative approach to increasing flexibility and improving joint health. By holding passive stretches for longer periods, yin yoga taps into the body’s deeper connective tissues, fostering stillness, patience, and a restorative pause from daily life.",
+      "what_to_expect": [
+        "A brief consultation to identify areas of tightness or stiffness",
+        "Long-held poses focusing on hips, spine, and lower body for enhanced mobility",
+        "A tranquil environment inviting introspection, patience, and quiet rejuvenation"
+      ]
+    },
+    {
+      "name": "Power Yoga",
+      "duration": "60 Minutes",
+      "description": "This invigorating 60-minute power yoga session is designed for those seeking a dynamic, strength-building practice that challenges the body and sharpens the mind. Through a series of energetic postures and balanced sequences, power yoga elevates heart rate, enhances stamina, and cultivates resilience.",
+      "what_to_expect": [
+        "A quick assessment to understand your fitness level and personal intentions",
+        "Strong, flowing sequences combining strength, balance, and flexibility exercises",
+        "An empowering setting that encourages perseverance, focus, and personal growth"
+      ]
+    }
+  ],
+  "Meditation & Mindfulness": [
+    {
+      "name": "Guided Mindfulness Meditation",
+      "duration": "30 Minutes",
+      "description": "This focused 30-minute guided mindfulness session is perfect for individuals looking to calm a busy mind, reduce everyday stress, and strengthen their connection to the present moment.",
+      "what_to_expect": [
+        "A brief consultation to understand your intention or areas of concern (e.g., anxiety, tension, difficulty focusing)",
+        "Clear, step-by-step guidance through a seated meditation practice",
+        "A soothing environment designed to encourage stillness, relaxation, and mental resilience"
+      ]
+    },
+    {
+      "name": "Crystal Singing Bowl Sound Bath",
+      "duration": "45 Minutes",
+      "description": "This immersive 45-minute sound bath is perfect for anyone seeking deep relaxation, energetic realignment, or relief from stress and fatigue. By surrounding you with the resonant tones of crystal singing bowls, this experience promotes emotional harmony and holistic rejuvenation.",
+      "what_to_expect": [
+        "A brief check-in to set a personal intention or desired outcome",
+        "Comfortable, reclined positioning to fully absorb soothing vibrations",
+        "Layers of melodic, resonant sound that help calm the nervous system and quiet the mind"
+      ]
+    },
+    {
+      "name": "Breathwork Balancing Session",
+      "duration": "30 Minutes",
+      "description": "This focused 30-minute breathwork practice is ideal for those looking to calm the nervous system, increase mental clarity, and enhance emotional resilience.",
+      "what_to_expect": [
+        "A short discussion to identify stressors, emotional imbalances, or breathing challenges",
+        "Guided breathing techniques tailored to your needs",
+        "A tranquil setting that encourages deep relaxation, inner equilibrium, and renewed vitality"
+      ]
+    },
+    {
+      "name": "Yoga Nidra (Sleep Meditation) Practice",
+      "duration": "45 Minutes",
+      "description": "This soothing 45-minute Yoga Nidra session helps individuals experience profound relaxation, improve sleep quality, and cultivate inner harmony.",
+      "what_to_expect": [
+        "A brief consultation to understand your restlessness, sleep concerns, or stress levels",
+        "Comfortable lying-down postures with blankets or pillows for support",
+        "A peaceful atmosphere that helps dissolve mental tension and promote restorative rest"
+      ]
+    },
+    {
+      "name": "Loving-Kindness (Metta) Meditation",
+      "duration": "30 Minutes",
+      "description": "This heart-centered 30-minute Loving-Kindness meditation session fosters compassion, empathy, and emotional well-being.",
+      "what_to_expect": [
+        "A brief intake to discuss intentions for cultivating compassion or reducing negativity",
+        "Guided repetition of positive affirmations directed toward oneself and others",
+        "A quiet, comforting environment that supports emotional openness, empathy, and inner calm"
+      ]
+    }
+  ],
+  "Fitness & Exercise Classes": [
+    {
+      "name": "HIIT Cardio Blast",
+      "duration": "30 Minutes",
+      "description": "This intense 30-minute HIIT class is perfect for individuals looking to burn calories, boost cardiovascular health, and build endurance in a short time.",
+      "what_to_expect": [
+        "A brief consultation to determine fitness goals and any physical limitations",
+        "Quick, explosive exercises combined with active recovery intervals",
+        "Encouragement to work at your own pace and modify as needed",
+        "A motivating, upbeat environment to push you toward your personal best"
+      ]
+    },
+    {
+      "name": "Strength Circuit Training",
+      "duration": "45 Minutes",
+      "description": "This challenging 45-minute strength circuit session is ideal for anyone looking to improve muscle tone, boost metabolism, and enhance overall power.",
+      "what_to_expect": [
+        "A short assessment to identify areas of focus or previous experience",
+        "A series of strength-building stations incorporating bodyweight and resistance tools",
+        "Guidance on proper technique, alignment, and safe progression",
+        "A supportive setting with uplifting music and instructor feedback"
+      ]
+    },
+    {
+      "name": "Dance Cardio Party",
+      "duration": "45 Minutes",
+      "description": "This fun-filled 45-minute dance cardio class is perfect for individuals who want to sweat, smile, and move to the rhythm. Easy-to-follow dance sequences set to upbeat music elevate heart rate and improve coordination.",
+      "what_to_expect": [
+        "A brief introduction to break down basic dance steps and modifications",
+        "Energetic choreography designed to get your blood pumping",
+        "Encouragement to embrace your unique style and enjoy the music",
+        "A lively, inclusive environment that welcomes all fitness levels"
+      ]
+    },
+    {
+      "name": "Boxing Bootcamp",
+      "duration": "60 Minutes",
+      "description": "This 60-minute boxing-inspired bootcamp is geared towards those seeking a full-body, high-energy workout that challenges both mind and body.",
+      "what_to_expect": [
+        "A quick chat to discuss experience and set personal intensity levels",
+        "Basic boxing techniques paired with bodyweight exercises and cardio intervals",
+        "Instruction on proper form to ensure safety and effectiveness",
+        "A dynamic atmosphere that channels focus, determination, and empowerment"
+      ]
+    },
+    {
+      "name": "Functional Mobility & Stretch",
+      "duration": "30 Minutes",
+      "description": "This restorative 30-minute class supports flexibility, reduces stiffness, and improves range of motion by blending gentle movement drills, foam rolling, and static stretches.",
+      "what_to_expect": [
+        "A brief assessment to highlight tight areas or past injuries",
+        "Guided mobility exercises and stretches tailored to your comfort level",
+        "Techniques to increase flexibility, improve posture, and prevent future injuries",
+        "A calming environment that nurtures body awareness and overall well-being"
+      ]
+    }
+  ],
+  "Holistic Therapies": [
+    {
+      "name": "Acupuncture Balancing Session",
+      "duration": "30 Minutes",
+      "description": "This focused 30-minute acupuncture session helps restore natural energy flow, reduce tension, and encourage holistic well-being.",
+      "what_to_expect": [
+        "A brief consultation to identify key areas of concern",
+        "Precision-placed needles tailored to your personal needs",
+        "A peaceful environment designed to foster tranquility and mind-body harmony"
+      ]
+    },
+    {
+      "name": "Reiki Energy Healing",
+      "duration": "45 Minutes",
+      "description": "This soothing 45-minute Reiki session supports emotional balance, stress reduction, and a deep sense of calm by channeling healing vibrations through gentle hand placements.",
+      "what_to_expect": [
+        "A short intake to discuss intentions and areas of emotional or physical tension",
+        "Light or hands-off energy work that channels healing vibrations",
+        "A nurturing space conducive to relaxation, emotional renewal, and spiritual alignment"
+      ]
+    },
+    {
+      "name": "Ayurvedic Abhyanga Massage",
+      "duration": "60 Minutes",
+      "description": "This revitalizing 60-minute Ayurvedic massage uses warm, herbal-infused oils and rhythmic strokes to enhance circulation, detoxification, and balance.",
+      "what_to_expect": [
+        "A brief dosha assessment to personalize oil selection and technique",
+        "Warm, herbal oils applied in flowing strokes to calm the nervous system",
+        "A tranquil environment that enhances relaxation and restores vitality"
+      ]
+    },
+    {
+      "name": "Reflexology Foot Treatment",
+      "duration": "30 Minutes",
+      "description": "This 30-minute reflexology session applies gentle pressure to specific points on the feet to support natural healing, improve energy flow, and alleviate tension.",
+      "what_to_expect": [
+        "A brief consultation to identify stress points or discomfort",
+        "Precision pressure techniques applied to foot reflex zones",
+        "A quiet, comfortable setting to nurture relaxation and holistic well-being"
+      ]
+    },
+    {
+      "name": "Craniosacral Therapy",
+      "duration": "60 Minutes",
+      "description": "This gentle 60-minute craniosacral session relieves stress, eases nervous system imbalances, and restores inner harmony through light, hands-on techniques along the head, spine, and sacrum.",
+      "what_to_expect": [
+        "A brief discussion to address specific concerns",
+        "Gentle, subtle touch along the craniosacral system to release restrictions",
+        "A serene environment fostering deep relaxation, clarity, and balanced well-being"
+      ]
+    }
+  ],
+  "Stress Reduction & Relaxation": [
+    {
+      "name": "Aromatherapy Massage",
+      "duration": "60 Minutes",
+      "description": "This soothing 60-minute aromatherapy massage uses essential oils and gentle massage techniques to ease tension, calm the mind, and enhance overall well-being.",
+      "what_to_expect": [
+        "A brief consultation to choose aromatic blends",
+        "A calming, full-body massage using long, flowing strokes",
+        "A tranquil environment enhanced by soothing scents and soft lighting"
+      ]
+    },
+    {
+      "name": "Hot Stone Relaxation Therapy",
+      "duration": "60 Minutes",
+      "description": "This comforting 60-minute hot stone treatment uses warmed stones to relax muscles, improve circulation, and promote deep rest and rejuvenation.",
+      "what_to_expect": [
+        "A short intake to identify tension areas and comfort preferences",
+        "Placement of heated stones to gently warm and loosen muscles",
+        "Soft, calming music and a serene setting for deeper relaxation"
+      ]
+    },
+    {
+      "name": "Guided Relaxation Workshop",
+      "duration": "30 Minutes",
+      "description": "This 30-minute guided relaxation workshop introduces breathwork, body scans, and grounding exercises to quickly reduce stress and encourage inner balance.",
+      "what_to_expect": [
+        "A brief check-in to understand stressors or personal intentions",
+        "Step-by-step guidance in gentle relaxation exercises",
+        "A quiet, comfortable space promoting stillness and clarity"
+      ]
+    },
+    {
+      "name": "Lavender-Infused Scalp & Neck Massage",
+      "duration": "30 Minutes",
+      "description": "This restorative 30-minute scalp and neck massage uses lavender oil to release tension, reduce headaches, and foster tranquility.",
+      "what_to_expect": [
+        "A quick consultation to identify tension in neck and shoulders",
+        "Application of warm lavender oil with slow, intentional massage strokes",
+        "A peaceful ambiance encouraging mental calmness and relaxation"
+      ]
+    },
+    {
+      "name": "Mindful Breathing & Journaling Session",
+      "duration": "45 Minutes",
+      "description": "This 45-minute session combines guided breathing techniques with journaling prompts to relieve stress and cultivate inner peace.",
+      "what_to_expect": [
+        "A brief conversation to outline emotional challenges or goals",
+        "Guided breathing exercises to promote relaxation and clarity",
+        "Supportive journaling prompts in a serene environment for self-reflection"
+      ]
+    }
+  ],
+  "Chiropractic & Alignment Services": [
+    {
+      "name": "Spinal Alignment & Adjustment",
+      "duration": "30 Minutes",
+      "description": "This focused 30-minute chiropractic alignment session improves spinal function, reduces pain, and promotes musculoskeletal harmony.",
+      "what_to_expect": [
+        "A brief consultation to identify key concerns",
+        "Targeted spinal adjustments tailored to your comfort and needs",
+        "A calm, welcoming environment supporting relaxation and well-being"
+      ]
+    },
+    {
+      "name": "Comprehensive Postural Assessment",
+      "duration": "45 Minutes",
+      "description": "This in-depth 45-minute postural assessment identifies imbalances, addresses poor posture, and recommends corrective exercises for alignment and ease.",
+      "what_to_expect": [
+        "A brief discussion to understand lifestyle factors affecting posture",
+        "A hands-on assessment of spine, shoulders, hips, and gait",
+        "Personalized recommendations for stretches, exercises, or ergonomic adjustments"
+      ]
+    },
+    {
+      "name": "Gentle Mobilization & Muscle Release",
+      "duration": "30 Minutes",
+      "description": "This 30-minute session uses soft tissue work, controlled joint mobilizations, and subtle stretching to ease tension and improve mobility.",
+      "what_to_expect": [
+        "A short consultation to identify areas of discomfort",
+        "Gentle, low-impact techniques to improve joint movement and flexibility",
+        "A soothing atmosphere that supports relaxation and relief"
+      ]
+    },
+    {
+      "name": "Sports & Injury Recovery Alignment",
+      "duration": "30 Minutes",
+      "description": "This specialized 30-minute chiropractic session supports athletes or active individuals by addressing imbalances, aiding recovery, and enhancing performance.",
+      "what_to_expect": [
+        "A brief intake to discuss injuries, routines, or goals",
+        "Targeted adjustments and soft tissue work to support healing",
+        "A supportive environment fostering resilience and improved athletic potential"
+      ]
+    },
+    {
+      "name": "Ergonomic Consultation & Correction",
+      "duration": "30 Minutes",
+      "description": "This 30-minute ergonomic consultation helps correct workstation setups, reduce strain, and prevent discomfort caused by poor posture.",
+      "what_to_expect": [
+        "A quick assessment of your current work or home setup",
+        "Guidance on proper ergonomics, posture cues, and simple corrective exercises",
+        "A practical, informative session empowering you to maintain better alignment"
+      ]
+    }
+  ],
+  "Nutrition & Dietary Counseling": [
+    {
+      "name": "Personalized Nutrition Consultation",
+      "duration": "60 Minutes",
+      "description": "This comprehensive 60-minute consultation provides tailored dietary guidance, improved eating habits, and strategies to support overall wellness.",
+      "what_to_expect": [
+        "A brief intake to identify health concerns or goals",
+        "Custom meal recommendations and balanced nutrition guidance",
+        "A supportive, educational environment to ask questions and gain confidence"
+      ]
+    },
+    {
+      "name": "Meal Planning & Prep Session",
+      "duration": "45 Minutes",
+      "description": "This 45-minute session offers practical tips, recipe ideas, and portion guidance to streamline meal planning, saving time and reducing stress.",
+      "what_to_expect": [
+        "A short discussion to assess schedule, skills, and preferences",
+        "Custom weekly meal outlines, grocery lists, and batch-cooking strategies",
+        "A friendly setting to confidently prepare nourishing meals at home"
+      ]
+    },
+    {
+      "name": "Herbal Remedy Consultation",
+      "duration": "30 Minutes",
+      "description": "This 30-minute consultation suggests herbs and supplements to boost digestion, immunity, and vitality, tailored to your individual needs.",
+      "what_to_expect": [
+        "A brief assessment of wellness goals, symptoms, or concerns",
+        "Targeted herbal recommendations aligned with your constitution",
+        "Guidance on proper dosage, preparation methods, and safety practices"
+      ]
+    },
+    {
+      "name": "Digestive Wellness Counseling",
+      "duration": "60 Minutes",
+      "description": "This in-depth 60-minute session addresses bloating, discomfort, and irregularity with personalized dietary advice and mindful eating techniques.",
+      "what_to_expect": [
+        "A thorough exploration of digestive patterns and meal timing",
+        "Tailored dietary recommendations, including fiber-rich and probiotic foods",
+        "A calm, encouraging atmosphere to build confidence in gut health management"
+      ]
+    },
+    {
+      "name": "Mindful Eating Workshop",
+      "duration": "30 Minutes",
+      "description": "This 30-minute workshop teaches mindful eating techniques to recognize hunger and fullness cues, savor flavors, and enjoy food without guilt.",
+      "what_to_expect": [
+        "A brief orientation to clarify challenges or triggers around food",
+        "Simple exercises to slow down, focus on taste, and honor body signals",
+        "A serene, non-judgmental environment promoting sustainable, compassionate eating"
+      ]
+    }
+  ],
+  "Spa & Skincare Treatments": [
+    {
+      "name": "Custom Organic Facial",
+      "duration": "60 Minutes",
+      "description": "This 60-minute organic facial uses plant-based products tailored to your skin type to cleanse, exfoliate, and hydrate for a refreshed glow.",
+      "what_to_expect": [
+        "A brief skin consultation to identify concerns",
+        "Gentle cleansing, exfoliation, and a personalized mask application",
+        "A peaceful environment enhanced by soothing aromas and calming music"
+      ]
+    },
+    {
+      "name": "Aromatic Body Scrub & Polish",
+      "duration": "45 Minutes",
+      "description": "This 45-minute body scrub treatment uses natural exfoliants and nourishing oils to remove dead skin cells, leaving skin soft and vibrant.",
+      "what_to_expect": [
+        "A quick consultation to select preferred scents or address dryness",
+        "A full-body exfoliation using gentle, aromatic scrubs",
+        "A relaxing atmosphere that encourages comfort and rejuvenation"
+      ]
+    },
+    {
+      "name": "Hydrating Hydrotherapy Soak",
+      "duration": "30 Minutes",
+      "description": "This 30-minute hydrotherapy soak relieves tension, eases tired muscles, and boosts circulation in a warm, mineral-rich bath.",
+      "what_to_expect": [
+        "A brief chat to identify preferred scents or mineral blends",
+        "A warm, mineral-infused bath designed to soothe sore muscles",
+        "A tranquil setting to support mental relaxation and restoration"
+      ]
+    },
+    {
+      "name": "Hot Oil Scalp Treatment",
+      "duration": "30 Minutes",
+      "description": "This 30-minute hot oil scalp treatment uses warm botanical oils and gentle massage to nourish the scalp, relieve tension, and promote relaxation.",
+      "what_to_expect": [
+        "A short consultation to note scalp concerns",
+        "Application of warmed oils and a relaxing scalp massage",
+        "Soft lighting and meditative music to enhance tranquility"
+      ]
+    },
+    {
+      "name": "Brightening Eye & Lip Treatment (Add-On)",
+      "duration": "15 Minutes",
+      "description": "This 15-minute add-on targets puffiness, fine lines, and dryness around the eyes and lips, using specialized serums and soothing compresses.",
+      "what_to_expect": [
+        "A brief assessment of under-eye circles, puffiness, or lip dryness",
+        "Gentle application of targeted serums and soothing compresses",
+        "A restful environment that complements other spa treatments"
+      ]
+    }
+  ],
+  "Alternative & Integrative Therapies": [
+    {
+      "name": "Cupping Therapy",
+      "duration": "30 Minutes",
+      "description": "This 30-minute cupping therapy session uses gentle suction to loosen tight muscles, improve circulation, and encourage natural healing.",
+      "what_to_expect": [
+        "A brief consultation to identify areas of discomfort",
+        "Placement of cups to promote circulation and ease tension",
+        "A calm environment designed to support relaxation and rejuvenation"
+      ]
+    },
+    {
+      "name": "Craniosacral Therapy",
+      "duration": "45 Minutes",
+      "description": "This 45-minute craniosacral therapy session uses light touch to release subtle restrictions and restore energy flow for harmony and clarity.",
+      "what_to_expect": [
+        "A short intake to pinpoint stressors or imbalance",
+        "Gentle hand placements to promote natural bodily rhythms",
+        "A peaceful setting fostering relaxation, body awareness, and calm"
+      ]
+    },
+    {
+      "name": "Reflexology Foot Treatment",
+      "duration": "30 Minutes",
+      "description": "This 30-minute reflexology foot session applies focused pressure to points corresponding to organs and systems, reducing stress and enhancing well-being.",
+      "what_to_expect": [
+        "A brief discussion to identify fatigue, tension, or sluggish energy",
+        "Skillful pressure techniques applied to foot reflex zones",
+        "A serene atmosphere fostering relaxation and harmony"
+      ]
+    },
+    {
+      "name": "Gua Sha Facial Rejuvenation",
+      "duration": "30 Minutes",
+      "description": "This 30-minute Gua Sha facial uses a smooth stone tool to stimulate blood flow, relieve tension, and refresh the complexion.",
+      "what_to_expect": [
+        "A quick consultation to address skincare concerns",
+        "Gentle Gua Sha techniques tailored to comfort level",
+        "A calming environment with soothing aromas and soft lighting"
+      ]
+    },
+    {
+      "name": "Moxibustion Therapy",
+      "duration": "30 Minutes",
+      "description": "This 30-minute moxibustion therapy session applies warm mugwort near acupuncture points to improve circulation, reduce pain, and enhance vitality.",
+      "what_to_expect": [
+        "A brief assessment to identify areas of concern",
+        "Careful application of warmth near targeted points",
+        "A relaxing setting that allows deep unwinding and restored well-being"
+      ]
+    }
+  ]
+}
