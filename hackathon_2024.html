@@ -6,174 +6,401 @@
 <title>Wellness Studio Search</title>
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .placeholder-typed {
+    border-right: 2px solid #fff;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: #fff; }
+  }
+</style>
 </head>
-<body class="bg-gray-900 text-gray-100 flex flex-col items-center justify-center min-h-screen">
+<body class="bg-gray-900 text-gray-100 flex flex-col min-h-screen mt-10">
 
-<!-- Container -->
-<div class="w-full max-w-xl mx-auto px-4">
+<div class="w-full max-w-3xl mx-auto px-4">
 
   <!-- Title -->
   <h1 class="text-2xl font-semibold mb-6">Tell us what you need, and our AI will curate options just for you.</h1>
 
   <!-- Search Box -->
   <div class="relative mb-8">
-    <input 
-      type="text" 
-      placeholder="Ask anything..." 
-      class="w-full p-3 rounded-md bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    <input
+      id="searchInput"
+      type="text"
+      placeholder=""
+      class="w-full p-5 rounded-md bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
     />
-    <!-- Optional search button or icon (for demonstration) -->
-    <!--
-    <button class="absolute right-2 top-2 text-gray-400 hover:text-gray-200">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
-           viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-              d="M8 16l4-4-4-4m5 0h7" />
-      </svg>
-    </button>
-    -->
   </div>
 
   <!-- Suggested Queries -->
-  <div id="suggestions" class="grid grid-cols-2 gap-4"></div>
-
+  <div id="suggestions" class="grid grid-cols-2 gap-4 mb-8">
+    <div data-query="I'm interested in a breathwork balancing session to clear my mental fog." class="cursor-pointer py-2 px-4 bg-gray-800 rounded hover:bg-gray-700 flex items-start space-x-2">
+      <span>🧘</span><span>I'm interested in a breathwork balancing session to clear my mental fog.</span>
+    </div>
+    <div data-query="Can I schedule craniosacral therapy to help with my persistent migraines?" class="cursor-pointer py-2 px-4 bg-gray-800 rounded hover:bg-gray-700 flex items-start space-x-2">
+      <span>🧠</span><span>Can I schedule craniosacral therapy to help with my persistent migraines?</span>
+    </div>
+    <div data-query="I need an adjustment" class="cursor-pointer py-2 px-4 bg-gray-800 rounded hover:bg-gray-700 flex items-start space-x-2">
+      <span>🦴</span><span>I need an adjustment</span>
+    </div>
+    <div data-query="Looking for quick relaxation?" class="cursor-pointer py-2 px-4 bg-gray-800 rounded hover:bg-gray-700 flex items-start space-x-2">
+      <span>😌</span><span>Looking for quick relaxation?</span>
+    </div>
+  </div>
 </div>
 
-<!-- JSON Data & Script to Randomize Suggestions -->
+<!-- Search Results Container -->
+<div id="searchResults" class="w-full max-w-3xl mx-auto px-4 mt-8"></div>
+
+<!-- SCRIPT SECTION -->
 <script>
-  // You can add or modify emojis to best match the context of each query.
   const data = {
-    "queries": [
-      {"text": "I'm interested in a breathwork balancing session to clear my mental fog.", "emoji": "🧘"},
-      {"text": "stiff neck pain", "emoji": "💆"},
-      {"text": "Can I schedule craniosacral therapy to help with my persistent migraines?", "emoji": "🧠"},
-      {"text": "looking for quick relaxation", "emoji": "🌿"},
-      {"text": "Can I book another reflexology foot treatment to improve my overall energy flow?", "emoji": "🦶"},
-      {"text": "I need an adjustment", "emoji": "🦴"},
-      {"text": "I'd like a guided relaxation workshop to learn quick stress reduction techniques.", "emoji": "🧘"},
-      {"text": "need a detox soak", "emoji": "🛀"},
-      {"text": "I'm looking for gentle mobilization & muscle release therapy for my tight shoulders.", "emoji": "🙆‍♀️"},
-      {"text": "help with mild knee pain", "emoji": "🦵"},
-      {"text": "Do you have restorative yoga sessions that can help reduce my stress levels?", "emoji": "🕉️"},
-      {"text": "need guided meditation", "emoji": "🧘"},
-      {"text": "I'm interested in a Vinyasa Flow Yoga class to improve my flexibility.", "emoji": "🧘‍♂️"},
-      {"text": "help with insomnia", "emoji": "😴"},
-      {"text": "Is there an aromatherapy stress-release massage available next Monday evening?", "emoji": "🌸"},
-      {"text": "quiet my busy mind", "emoji": "🤫"},
-      {"text": "Do you have a boxing bootcamp class to help me relieve stress?", "emoji": "🥊"},
-      {"text": "cupping therapy available?", "emoji": "🩹"},
-      {"text": "Can I try Yoga Nidra to improve my sleep quality this Friday evening?", "emoji": "🛏️"},
-      {"text": "low energy fix?", "emoji": "⚡"},
-      {"text": "Can I get an ergonomic consultation to fix my work-from-home setup?", "emoji": "💻"},
-      {"text": "I need something good for headaches", "emoji": "💆‍♂️"},
-      {"text": "help with frequent migraines", "emoji": "🤕"},
-      {"text": "Is there a lavender-infused scalp & neck massage for my tension headaches?", "emoji": "🌱"},
-      {"text": "improve my digestion", "emoji": "🍵"},
-      {"text": "I'm looking for a HIIT cardio blast class to boost my stamina and endurance.", "emoji": "🏃‍♀️"},
-      {"text": "postural alignment needed", "emoji": "🧍‍♂️"},
-      {"text": "Do you offer a back massage?", "emoji": "💆‍♀️"},
-      {"text": "my back hurts", "emoji": "🔥"},
-      {"text": "Do you have hot stone relaxation therapy available on Saturday morning?", "emoji": "🌋"},
-      {"text": "I need a spinal alignment & adjustment to improve my posture.", "emoji": "🦴"},
-      {"text": "looking for herbal remedies", "emoji": "🌿"},
-      {"text": "I'd like a dance cardio party that's beginner-friendly and fun.", "emoji": "💃"},
-      {"text": "foot reflexology now?", "emoji": "🦶"},
-      {"text": "Can I schedule a yin yoga session to increase hip and hamstring mobility?", "emoji": "🧎‍♀️"},
-      {"text": "improve mental clarity", "emoji": "💡"},
-      {"text": "I'm looking for an Ayurvedic Abhyanga massage to improve circulation.", "emoji": "🌱"},
-      {"text": "I need an acupuncture balancing session to alleviate my frequent headaches.", "emoji": "💆‍♂️"},
-      {"text": "improve my posture now?", "emoji": "🧍"},
-      {"text": "I'm interested in an aromatherapy massage to reduce my anxiety before a big event.", "emoji": "🌺"},
-      {"text": "looking for foot relief", "emoji": "🦶"},
-      {"text": "Do you offer a Reiki energy healing appointment for emotional balance?", "emoji": "✨"},
-      {"text": "need mindfulness coaching", "emoji": "🧘"},
-      {"text": "Do you have an aromatic body scrub & polish treatment for smoother skin?", "emoji": "🧴"},
-      {"text": "want energy balancing", "emoji": "🔋"},
-      {"text": "Is there a moxibustion therapy session to help warm my muscles and ease discomfort?", "emoji": "🔥"},
-      {"text": "Can I add a brightening eye & lip treatment to my spa session next week?", "emoji": "💋"},
-      {"text": "I'm interested in trying cupping therapy for my stiff upper back.", "emoji": "🩹"},
-      {"text": "lower back tension", "emoji": "↩️"},
-      {"text": "I'd like a Gua Sha facial rejuvenation to reduce puffiness around my cheeks.", "emoji": "💆"},
-      {"text": "improve my sleep quality", "emoji": "🛏️"},
-      {"text": "Is there a power yoga practice suited for building my upper body strength?", "emoji": "💪"},
-      {"text": "anxiety relief treatment", "emoji": "🌬️"},
-      {"text": "I'm interested in an herbal remedy consultation for boosting my immunity.", "emoji": "🌿"},
-      {"text": "help with chronic shoulder pain", "emoji": "🤕"},
-      {"text": "I'm looking for a custom organic facial to brighten my skin tone.", "emoji": "🍊"},
-      {"text": "need a good yoga class", "emoji": "🧘‍♀️"},
-      {"text": "Can I attend a functional mobility & stretch class for my stiff joints?", "emoji": "🦿"},
-      {"text": "Is there a hot oil scalp treatment to help with dryness and tension?", "emoji": "💇"},
-      {"text": "easy stress reduction", "emoji": "😌"},
-      {"text": "I need a back massage", "emoji": "💆"},
-      {"text": "I'm interested in a breathwork balancing session to clear my mental fog.", "emoji": "🌬️"},
-      {"text": "something for sore muscles", "emoji": "🩹"},
-      {"text": "I need an adjustment", "emoji": "🦴"},
-      {"text": "Can I book a shiatsu energy balancing massage for this weekend?", "emoji": "🙌"},
-      {"text": "do you have aromatherapy?", "emoji": "🌸"},
-      {"text": "I need a guided mindfulness meditation to help calm my anxious mind.", "emoji": "🧘"},
-      {"text": "looking for better posture", "emoji": "🧍"},
-      {"text": "I'd like a hot stone massage to help melt away tension in my lower back.", "emoji": "🌋"},
-      {"text": "Can I schedule digestive wellness counseling to address my bloating issues?", "emoji": "🍵"},
-      {"text": "I'm looking for a Swedish relaxation massage next Tuesday afternoon.", "emoji": "🧖"},
-      {"text": "help with muscle release", "emoji": "💆"},
-      {"text": "I'd like a Pilates mat class that focuses on strengthening my core.", "emoji": "🧘‍♂️"},
-      {"text": "tension in neck and shoulders", "emoji": "🙆"},
-      {"text": "Can I book a mindful breathing & journaling session to process my emotions?", "emoji": "📔"},
-      {"text": "deepen my yoga practice", "emoji": "🧘"},
-      {"text": "I'm looking for a hydrating hydrotherapy soak to ease muscle soreness.", "emoji": "💦"},
-      {"text": "knot in my upper back", "emoji": "💢"},
-      {"text": "Can I try Yoga Nidra to improve my sleep quality this Friday evening?", "emoji": "🛏️"},
-      {"text": "improve circulation therapy", "emoji": "🩸"},
-      {"text": "I'm looking for an Ayurvedic Abhyanga massage to improve circulation.", "emoji": "🌿"},
-      {"text": "something for muscle recovery", "emoji": "🏋️"},
-      {"text": "I'd like a personalized nutrition consultation to improve my eating habits.", "emoji": "🥦"},
-      {"text": "Do you have craniosacral therapy sessions to promote deep relaxation?", "emoji": "🧠"},
-      {"text": "seeking calm and tranquility", "emoji": "🌊"},
-      {"text": "Do you offer a meal planning & prep session to help me eat healthier during the week?", "emoji": "🍽️"},
-      {"text": "I'm interested in a Vinyasa Flow Yoga class to improve my flexibility.", "emoji": "🧘‍♀️"},
-      {"text": "I'm looking for a HIIT cardio blast class to boost my stamina and endurance.", "emoji": "🏃"},
-      {"text": "Do you offer a loving-kindness meditation to cultivate compassion?", "emoji": "💖"},
-      {"text": "need help relaxing", "emoji": "😌"},
-      {"text": "Do you have restorative yoga sessions that can help reduce my stress levels?", "emoji": "🕉️"},
-      {"text": "something for sore muscles", "emoji": "💆"},
-      {"text": "I'd like a guided relaxation workshop to learn quick stress reduction techniques.", "emoji": "🧘"},
-      {"text": "help with stress management", "emoji": "🌱"},
-      {"text": "Is there a strength circuit training session to help me build lean muscle?", "emoji": "💪"},
-      {"text": "brighten my complexion", "emoji": "✨"},
-      {"text": "Do you offer a comprehensive postural assessment for better ergonomic support?", "emoji": "🧍"}
+    "Massage & Bodywork": [
+      {
+        "name": "Swedish Relaxation Massage",
+        "duration": "60 Minutes",
+        "description": "This soothing 60-minute Swedish massage is designed to melt away tension and promote deep relaxation...",
+        "what_to_expect": [
+          "A brief consultation...",
+          "Long, gentle, gliding strokes...",
+          "An emphasis on relaxation...",
+          "A tranquil environment..."
+        ]
+      },
+      {
+        "name": "Deep Tissue Muscle Relief",
+        "duration": "60 Minutes",
+        "description": "This 60-minute deep tissue massage targets chronic muscle tension...",
+        "what_to_expect": [
+          "A conversation to identify problem areas...",
+          "Firm pressure and slow strokes...",
+          "Focus on areas prone to tightness...",
+          "Techniques to alleviate tension..."
+        ]
+      },
+      {
+        "name": "Shiatsu Energy Balancing",
+        "duration": "45 Minutes",
+        "description": "This 45-minute shiatsu massage session uses finger pressure, stretching, and gentle joint rotations...",
+        "what_to_expect": [
+          "A brief intake to understand your energy flow...",
+          "Gentle yet firm finger pressure along meridians...",
+          "Stretching and mobilization...",
+          "A nurturing environment..."
+        ]
+      },
+      {
+        "name": "Aromatherapy Stress-Release Massage",
+        "duration": "60 Minutes",
+        "description": "This 60-minute aromatherapy massage integrates carefully selected essential oils...",
+        "what_to_expect": [
+          "A brief consultation...",
+          "Gentle, rhythmic strokes...",
+          "Inhalation of aromatic blends...",
+          "A peaceful, cozy space..."
+        ]
+      }
+    ],
+    "Meditation & Mindfulness": [
+      {
+        "name": "Guided Mindfulness Meditation",
+        "duration": "30 Minutes",
+        "description": "This focused 30-minute guided mindfulness session is perfect for individuals...",
+        "what_to_expect": [
+          "A brief consultation...",
+          "Clear, step-by-step guidance...",
+          "A soothing environment..."
+        ]
+      },
+      {
+        "name": "Breathwork Balancing Session",
+        "duration": "30 Minutes",
+        "description": "This focused 30-minute breathwork practice is ideal for those looking to calm the nervous system...",
+        "what_to_expect": [
+          "A short discussion...",
+          "Guided breathing techniques...",
+          "A tranquil setting..."
+        ]
+      },
+      {
+        "name": "Yoga Nidra (Sleep Meditation) Practice",
+        "duration": "45 Minutes",
+        "description": "This soothing 45-minute Yoga Nidra session helps individuals experience profound relaxation...",
+        "what_to_expect": [
+          "A brief consultation...",
+          "Comfortable lying-down postures...",
+          "A peaceful atmosphere..."
+        ]
+      }
+    ],
+    "Chiropractic & Alignment": [
+      {
+        "name": "Spinal Alignment & Adjustment",
+        "duration": "30 Minutes",
+        "description": "This focused 30-minute chiropractic alignment session improves spinal function...",
+        "what_to_expect": [
+          "A brief consultation...",
+          "Targeted spinal adjustments...",
+          "A calm, welcoming environment..."
+        ]
+      },
+      {
+        "name": "Comprehensive Postural Assessment",
+        "duration": "45 Minutes",
+        "description": "This in-depth 45-minute postural assessment identifies imbalances...",
+        "what_to_expect": [
+          "A brief discussion...",
+          "A hands-on assessment...",
+          "Personalized recommendations..."
+        ]
+      },
+      {
+        "name": "Gentle Mobilization & Muscle Release",
+        "duration": "30 Minutes",
+        "description": "This 30-minute session uses soft tissue work, controlled joint mobilizations...",
+        "what_to_expect": [
+          "A short consultation...",
+          "Gentle, low-impact techniques...",
+          "A soothing atmosphere..."
+        ]
+      }
+    ],
+    "Holistic Therapies": [
+      {
+        "name": "Craniosacral Therapy",
+        "duration": "60 Minutes",
+        "description": "This gentle 60-minute craniosacral session relieves stress, eases nervous system imbalances...",
+        "what_to_expect": [
+          "A brief discussion...",
+          "Gentle, subtle touch...",
+          "A serene environment..."
+        ]
+      }
+    ],
+    "Stress & Relaxation": [
+      {
+        "name": "Aromatherapy Massage",
+        "duration": "60 Minutes",
+        "description": "This soothing 60-minute aromatherapy massage uses essential oils...",
+        "what_to_expect": [
+          "A brief consultation...",
+          "A calming, full-body massage...",
+          "A tranquil environment..."
+        ]
+      },
+      {
+        "name": "Guided Relaxation Workshop",
+        "duration": "30 Minutes",
+        "description": "This 30-minute guided relaxation workshop introduces breathwork, body scans...",
+        "what_to_expect": [
+          "A brief check-in...",
+          "Step-by-step guidance...",
+          "A quiet, comfortable space..."
+        ]
+      },
+      {
+        "name": "Lavender-Infused Scalp & Neck Massage",
+        "duration": "30 Minutes",
+        "description": "This restorative 30-minute scalp and neck massage uses lavender oil...",
+        "what_to_expect": [
+          "A quick consultation...",
+          "Application of warm lavender oil...",
+          "A peaceful ambiance..."
+        ]
+      }
     ]
   };
 
-  function getRandomQueries(num) {
-    const shuffled = data.queries.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, num);
+  const recommendedMapping = {
+    "I'm interested in a breathwork balancing session to clear my mental fog.": {
+      "best": {
+        "category": "Meditation & Mindfulness",
+        "name": "Breathwork Balancing Session",
+        "reasoning": "This service directly addresses mental clarity through guided breathwork, calming the nervous system and improving focus."
+      },
+      "others": [
+        { "category": "Meditation & Mindfulness", "name": "Guided Mindfulness Meditation" },
+        { "category": "Meditation & Mindfulness", "name": "Yoga Nidra (Sleep Meditation) Practice" }
+      ]
+    },
+    "Can I schedule craniosacral therapy to help with my persistent migraines?": {
+      "best": {
+        "category": "Holistic Therapies",
+        "name": "Craniosacral Therapy",
+        "reasoning": "Craniosacral Therapy gently targets the craniosacral system to ease nervous system imbalances, relieving tension often associated with migraines."
+      },
+      "others": [
+        { "category": "Massage & Bodywork", "name": "Shiatsu Energy Balancing" },
+        { "category": "Massage & Bodywork", "name": "Aromatherapy Stress-Release Massage" }
+      ]
+    },
+    "I need an adjustment": {
+      "best": {
+        "category": "Chiropractic & Alignment",
+        "name": "Spinal Alignment & Adjustment",
+        "reasoning": "This treatment specifically addresses spinal misalignments, offering a direct adjustment to improve posture and reduce discomfort."
+      },
+      "others": [
+        { "category": "Chiropractic & Alignment", "name": "Comprehensive Postural Assessment" },
+        { "category": "Chiropractic & Alignment", "name": "Gentle Mobilization & Muscle Release" }
+      ]
+    },
+    "Looking for quick relaxation?": {
+      "best": {
+        "category": "Stress & Relaxation",
+        "name": "Guided Relaxation Workshop",
+        "reasoning": "This short, focused session quickly teaches practical relaxation techniques, making it ideal for immediate stress relief."
+      },
+      "others": [
+        { "category": "Stress & Relaxation", "name": "Lavender-Infused Scalp & Neck Massage" },
+        { "category": "Stress & Relaxation", "name": "Aromatherapy Massage" }
+      ]
+    }
+  };
+
+  // Placeholder typewriter effect
+  const placeholderQueries = [
+    "I'm interested in a breathwork balancing session to clear my mental fog.",
+    "Can I schedule craniosacral therapy to help with my persistent migraines?",
+    "I need an adjustment",
+    "Looking for quick relaxation?"
+  ];
+
+  function typeText(element, text, speed = 50, callback) {
+    let index = 0;
+    element.setAttribute('placeholder', '');
+    const interval = setInterval(() => {
+      element.setAttribute('placeholder', text.slice(0, index + 1));
+      index++;
+      if (index === text.length) {
+        clearInterval(interval);
+        if (callback) callback();
+      }
+    }, speed);
+  }
+
+  let currentPlaceholderIndex = 0;
+  const searchInput = document.getElementById('searchInput');
+
+  function cyclePlaceholders() {
+    searchInput.classList.add('placeholder-typed');
+    typeText(searchInput, placeholderQueries[currentPlaceholderIndex], 50, () => {
+      setTimeout(() => {
+        searchInput.classList.remove('placeholder-typed');
+        setTimeout(() => {
+          currentPlaceholderIndex = (currentPlaceholderIndex + 1) % placeholderQueries.length;
+          cyclePlaceholders();
+        }, 2000);
+      }, 500);
+    });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const suggestionsContainer = document.getElementById('suggestions');
-    const suggestions = getRandomQueries(4);
+    cyclePlaceholders();
 
-    suggestions.forEach((item) => {
-      const suggestionDiv = document.createElement('div');
-      suggestionDiv.className = 'cursor-pointer py-2 px-4 bg-gray-800 rounded hover:bg-gray-700 flex items-center space-x-2';
-      
-      const emojiSpan = document.createElement('span');
-      emojiSpan.textContent = item.emoji;
-      
-      const textSpan = document.createElement('span');
-      textSpan.textContent = item.text;
-
-      suggestionDiv.appendChild(emojiSpan);
-      suggestionDiv.appendChild(textSpan);
-      
-      // Optionally, you can make it fill the search box on click:
-      // suggestionDiv.addEventListener('click', () => {
-      //   document.querySelector('input[type="text"]').value = item.text;
-      // });
-
-      suggestionsContainer.appendChild(suggestionDiv);
+    // Add click event to the suggestions
+    document.querySelectorAll('#suggestions [data-query]').forEach(el => {
+      el.addEventListener('click', () => {
+        const query = el.getAttribute('data-query');
+        searchInput.value = query;
+        executeSearch(query);
+      });
     });
   });
+
+  function executeSearch(query) {
+    const resultsContainer = document.getElementById('searchResults');
+    resultsContainer.innerHTML = ''; // clear old results
+
+    if (!recommendedMapping[query]) {
+      return;
+    }
+
+    const recs = recommendedMapping[query];
+    const bestService = findService(recs.best.category, recs.best.name);
+    const otherServices = recs.others.map(s => findService(s.category, s.name)).filter(s => s);
+
+    const bestCard = createServiceCard(bestService, true, recs.best.reasoning);
+    appendWithAnimation(resultsContainer, bestCard);
+
+    otherServices.forEach(svc => {
+      const card = createServiceCard(svc, false);
+      appendWithAnimation(resultsContainer, card);
+    });
+  }
+
+  function findService(category, name) {
+    const catServices = data[category];
+    // If service doesn't exist, return undefined
+    return catServices && catServices.find(s => s.name === name);
+  }
+
+  function createServiceCard(service, isBest = false, reasoning = '') {
+    let baseClasses = 'p-5 rounded-md mb-6';
+    let cardClass = isBest
+      ? `bg-indigo-700 border-2 border-indigo-400 hover:border-indigo-200 ${baseClasses}`
+      : `bg-gray-800 border border-transparent hover:border-indigo-300 ${baseClasses}`;
+
+    const card = document.createElement('div');
+    card.className = cardClass + ' opacity-0 translate-y-4 transition-all duration-500 ease-out';
+
+    const title = document.createElement('h2');
+    title.className = 'text-xl font-semibold mb-2';
+    title.textContent = service.name;
+    card.appendChild(title);
+
+    const duration = document.createElement('p');
+    duration.className = 'text-sm text-gray-300 mb-2';
+    duration.textContent = service.duration;
+    card.appendChild(duration);
+
+    if (isBest && reasoning) {
+      const reasoningP = document.createElement('p');
+      reasoningP.className = 'mb-4 p-3 bg-indigo-900 rounded text-sm';
+      reasoningP.textContent = `Why this is the best recommendation: ${reasoning}`;
+      card.appendChild(reasoningP);
+    }
+
+    const desc = document.createElement('p');
+    desc.className = 'mb-4';
+    desc.textContent = service.description;
+    card.appendChild(desc);
+
+    const wteTitle = document.createElement('h3');
+    wteTitle.className = 'text-lg font-semibold mb-2';
+    wteTitle.textContent = 'What to Expect:';
+    card.appendChild(wteTitle);
+
+    const wteList = document.createElement('ul');
+    wteList.className = 'list-disc list-inside space-y-1';
+
+    service.what_to_expect.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      wteList.appendChild(li);
+    });
+
+    card.appendChild(wteList);
+
+    // Book Button
+    const bookButton = document.createElement('button');
+    bookButton.className = 'mt-4 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded text-white transition-colors duration-300 ease-out';
+    bookButton.textContent = 'Book';
+    card.appendChild(bookButton);
+
+    return card;
+  }
+
+  // Append the card and then trigger the animation
+  function appendWithAnimation(container, card) {
+    container.appendChild(card);
+    // Force a reflow to ensure transition will run
+    requestAnimationFrame(() => {
+      card.classList.remove('opacity-0', 'translate-y-4');
+    });
+  }
 </script>
 </body>
 </html>
