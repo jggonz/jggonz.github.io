@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Wellness Studio Search</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 flex flex-col items-center justify-center min-h-screen">
+
+<!-- Container -->
+<div class="w-full max-w-xl mx-auto px-4">
+
+  <!-- Title -->
+  <h1 class="text-2xl font-semibold mb-6">What do you want to know?</h1>
+
+  <!-- Search Box -->
+  <div class="relative mb-8">
+    <input 
+      type="text" 
+      placeholder="Ask anything..." 
+      class="w-full p-3 rounded-md bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    />
+    <!-- Optional search button or icon (for demonstration) -->
+    <!--
+    <button class="absolute right-2 top-2 text-gray-400 hover:text-gray-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" 
+           viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M8 16l4-4-4-4m5 0h7" />
+      </svg>
+    </button>
+    -->
+  </div>
+
+  <!-- Suggested Queries -->
+  <div id="suggestions" class="grid grid-cols-2 gap-4"></div>
+
+</div>
+
+<!-- JSON Data & Script to Randomize Suggestions -->
+<script>
+  // You can add or modify emojis to best match the context of each query.
+  const data = {
+    "queries": [
+      {"text": "I'm interested in a breathwork balancing session to clear my mental fog.", "emoji": "🧘"},
+      {"text": "stiff neck pain", "emoji": "💆"},
+      {"text": "Can I schedule craniosacral therapy to help with my persistent migraines?", "emoji": "🧠"},
+      {"text": "looking for quick relaxation", "emoji": "🌿"},
+      {"text": "Can I book another reflexology foot treatment to improve my overall energy flow?", "emoji": "🦶"},
+      {"text": "I need an adjustment", "emoji": "🦴"},
+      {"text": "I'd like a guided relaxation workshop to learn quick stress reduction techniques.", "emoji": "🧘"},
+      {"text": "need a detox soak", "emoji": "🛀"},
+      {"text": "I'm looking for gentle mobilization & muscle release therapy for my tight shoulders.", "emoji": "🙆‍♀️"},
+      {"text": "help with mild knee pain", "emoji": "🦵"},
+      {"text": "Do you have restorative yoga sessions that can help reduce my stress levels?", "emoji": "🕉️"},
+      {"text": "need guided meditation", "emoji": "🧘"},
+      {"text": "I'm interested in a Vinyasa Flow Yoga class to improve my flexibility.", "emoji": "🧘‍♂️"},
+      {"text": "help with insomnia", "emoji": "😴"},
+      {"text": "Is there an aromatherapy stress-release massage available next Monday evening?", "emoji": "🌸"},
+      {"text": "quiet my busy mind", "emoji": "🤫"},
+      {"text": "Do you have a boxing bootcamp class to help me relieve stress?", "emoji": "🥊"},
+      {"text": "cupping therapy available?", "emoji": "🩹"},
+      {"text": "Can I try Yoga Nidra to improve my sleep quality this Friday evening?", "emoji": "🛏️"},
+      {"text": "low energy fix?", "emoji": "⚡"},
+      {"text": "Can I get an ergonomic consultation to fix my work-from-home setup?", "emoji": "💻"},
+      {"text": "I need something good for headaches", "emoji": "💆‍♂️"},
+      {"text": "help with frequent migraines", "emoji": "🤕"},
+      {"text": "Is there a lavender-infused scalp & neck massage for my tension headaches?", "emoji": "🌱"},
+      {"text": "improve my digestion", "emoji": "🍵"},
+      {"text": "I'm looking for a HIIT cardio blast class to boost my stamina and endurance.", "emoji": "🏃‍♀️"},
+      {"text": "postural alignment needed", "emoji": "🧍‍♂️"},
+      {"text": "Do you offer a back massage?", "emoji": "💆‍♀️"},
+      {"text": "my back hurts", "emoji": "🔥"},
+      {"text": "Do you have hot stone relaxation therapy available on Saturday morning?", "emoji": "🌋"},
+      {"text": "I need a spinal alignment & adjustment to improve my posture.", "emoji": "🦴"},
+      {"text": "looking for herbal remedies", "emoji": "🌿"},
+      {"text": "I'd like a dance cardio party that's beginner-friendly and fun.", "emoji": "💃"},
+      {"text": "foot reflexology now?", "emoji": "🦶"},
+      {"text": "Can I schedule a yin yoga session to increase hip and hamstring mobility?", "emoji": "🧎‍♀️"},
+      {"text": "improve mental clarity", "emoji": "💡"},
+      {"text": "I'm looking for an Ayurvedic Abhyanga massage to improve circulation.", "emoji": "🌱"},
+      {"text": "I need an acupuncture balancing session to alleviate my frequent headaches.", "emoji": "💆‍♂️"},
+      {"text": "improve my posture now?", "emoji": "🧍"},
+      {"text": "I'm interested in an aromatherapy massage to reduce my anxiety before a big event.", "emoji": "🌺"},
+      {"text": "looking for foot relief", "emoji": "🦶"},
+      {"text": "Do you offer a Reiki energy healing appointment for emotional balance?", "emoji": "✨"},
+      {"text": "need mindfulness coaching", "emoji": "🧘"},
+      {"text": "Do you have an aromatic body scrub & polish treatment for smoother skin?", "emoji": "🧴"},
+      {"text": "want energy balancing", "emoji": "🔋"},
+      {"text": "Is there a moxibustion therapy session to help warm my muscles and ease discomfort?", "emoji": "🔥"},
+      {"text": "Can I add a brightening eye & lip treatment to my spa session next week?", "emoji": "💋"},
+      {"text": "I'm interested in trying cupping therapy for my stiff upper back.", "emoji": "🩹"},
+      {"text": "lower back tension", "emoji": "↩️"},
+      {"text": "I'd like a Gua Sha facial rejuvenation to reduce puffiness around my cheeks.", "emoji": "💆"},
+      {"text": "improve my sleep quality", "emoji": "🛏️"},
+      {"text": "Is there a power yoga practice suited for building my upper body strength?", "emoji": "💪"},
+      {"text": "anxiety relief treatment", "emoji": "🌬️"},
+      {"text": "I'm interested in an herbal remedy consultation for boosting my immunity.", "emoji": "🌿"},
+      {"text": "help with chronic shoulder pain", "emoji": "🤕"},
+      {"text": "I'm looking for a custom organic facial to brighten my skin tone.", "emoji": "🍊"},
+      {"text": "need a good yoga class", "emoji": "🧘‍♀️"},
+      {"text": "Can I attend a functional mobility & stretch class for my stiff joints?", "emoji": "🦿"},
+      {"text": "Is there a hot oil scalp treatment to help with dryness and tension?", "emoji": "💇"},
+      {"text": "easy stress reduction", "emoji": "😌"},
+      {"text": "I need a back massage", "emoji": "💆"},
+      {"text": "I'm interested in a breathwork balancing session to clear my mental fog.", "emoji": "🌬️"},
+      {"text": "something for sore muscles", "emoji": "🩹"},
+      {"text": "I need an adjustment", "emoji": "🦴"},
+      {"text": "Can I book a shiatsu energy balancing massage for this weekend?", "emoji": "🙌"},
+      {"text": "do you have aromatherapy?", "emoji": "🌸"},
+      {"text": "I need a guided mindfulness meditation to help calm my anxious mind.", "emoji": "🧘"},
+      {"text": "looking for better posture", "emoji": "🧍"},
+      {"text": "I'd like a hot stone massage to help melt away tension in my lower back.", "emoji": "🌋"},
+      {"text": "Can I schedule digestive wellness counseling to address my bloating issues?", "emoji": "🍵"},
+      {"text": "I'm looking for a Swedish relaxation massage next Tuesday afternoon.", "emoji": "🧖"},
+      {"text": "help with muscle release", "emoji": "💆"},
+      {"text": "I'd like a Pilates mat class that focuses on strengthening my core.", "emoji": "🧘‍♂️"},
+      {"text": "tension in neck and shoulders", "emoji": "🙆"},
+      {"text": "Can I book a mindful breathing & journaling session to process my emotions?", "emoji": "📔"},
+      {"text": "deepen my yoga practice", "emoji": "🧘"},
+      {"text": "I'm looking for a hydrating hydrotherapy soak to ease muscle soreness.", "emoji": "💦"},
+      {"text": "knot in my upper back", "emoji": "💢"},
+      {"text": "Can I try Yoga Nidra to improve my sleep quality this Friday evening?", "emoji": "🛏️"},
+      {"text": "improve circulation therapy", "emoji": "🩸"},
+      {"text": "I'm looking for an Ayurvedic Abhyanga massage to improve circulation.", "emoji": "🌿"},
+      {"text": "something for muscle recovery", "emoji": "🏋️"},
+      {"text": "I'd like a personalized nutrition consultation to improve my eating habits.", "emoji": "🥦"},
+      {"text": "Do you have craniosacral therapy sessions to promote deep relaxation?", "emoji": "🧠"},
+      {"text": "seeking calm and tranquility", "emoji": "🌊"},
+      {"text": "Do you offer a meal planning & prep session to help me eat healthier during the week?", "emoji": "🍽️"},
+      {"text": "I'm interested in a Vinyasa Flow Yoga class to improve my flexibility.", "emoji": "🧘‍♀️"},
+      {"text": "I'm looking for a HIIT cardio blast class to boost my stamina and endurance.", "emoji": "🏃"},
+      {"text": "Do you offer a loving-kindness meditation to cultivate compassion?", "emoji": "💖"},
+      {"text": "need help relaxing", "emoji": "😌"},
+      {"text": "Do you have restorative yoga sessions that can help reduce my stress levels?", "emoji": "🕉️"},
+      {"text": "something for sore muscles", "emoji": "💆"},
+      {"text": "I'd like a guided relaxation workshop to learn quick stress reduction techniques.", "emoji": "🧘"},
+      {"text": "help with stress management", "emoji": "🌱"},
+      {"text": "Is there a strength circuit training session to help me build lean muscle?", "emoji": "💪"},
+      {"text": "brighten my complexion", "emoji": "✨"},
+      {"text": "Do you offer a comprehensive postural assessment for better ergonomic support?", "emoji": "🧍"}
+    ]
+  };
+
+  function getRandomQueries(num) {
+    const shuffled = data.queries.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, num);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const suggestionsContainer = document.getElementById('suggestions');
+    const suggestions = getRandomQueries(4);
+
+    suggestions.forEach((item) => {
+      const suggestionDiv = document.createElement('div');
+      suggestionDiv.className = 'cursor-pointer py-2 px-4 bg-gray-800 rounded hover:bg-gray-700 flex items-center space-x-2';
+      
+      const emojiSpan = document.createElement('span');
+      emojiSpan.textContent = item.emoji;
+      
+      const textSpan = document.createElement('span');
+      textSpan.textContent = item.text;
+
+      suggestionDiv.appendChild(emojiSpan);
+      suggestionDiv.appendChild(textSpan);
+      
+      // Optionally, you can make it fill the search box on click:
+      // suggestionDiv.addEventListener('click', () => {
+      //   document.querySelector('input[type="text"]').value = item.text;
+      // });
+
+      suggestionsContainer.appendChild(suggestionDiv);
+    });
+  });
+</script>
+</body>
+</html>
