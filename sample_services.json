@@ -160,7 +160,7 @@
       ]
     }
   ],
-  "Fitness & Exercise Classes": [
+  "Fitness & Exercise": [
     {
       "name": "HIIT Cardio Blast",
       "duration": "30 Minutes",
@@ -269,7 +269,7 @@
       ]
     }
   ],
-  "Stress Reduction & Relaxation": [
+  "Stress & Relaxation": [
     {
       "name": "Aromatherapy Massage",
       "duration": "60 Minutes",
@@ -321,7 +321,7 @@
       ]
     }
   ],
-  "Chiropractic & Alignment Services": [
+  "Chiropractic & Alignment": [
     {
       "name": "Spinal Alignment & Adjustment",
       "duration": "30 Minutes",
@@ -373,7 +373,7 @@
       ]
     }
   ],
-  "Nutrition & Dietary Counseling": [
+  "Nutrition & Dietary": [
     {
       "name": "Personalized Nutrition Consultation",
       "duration": "60 Minutes",
@@ -477,7 +477,7 @@
       ]
     }
   ],
-  "Alternative & Integrative Therapies": [
+  "Alternative & Integrative": [
     {
       "name": "Cupping Therapy",
       "duration": "30 Minutes",
