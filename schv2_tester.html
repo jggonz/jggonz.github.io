@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mindbody URL Builder</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-2xl w-full">
+      <h1 class="text-2xl font-bold mb-6 text-center">Mindbody Schedule V2 Tester</h1>
+
+      <!-- Single Site ID Input Section -->
+      <div class="mb-8">
+        <label for="siteId" class="block text-gray-700 font-medium mb-2">
+          Mindbody Site ID
+        </label>
+        <input
+          type="number"
+          id="siteId"
+          class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter Site ID"
+        />
+        <div class="mt-4 text-center">
+          <a
+            id="generatedUrl"
+            href="#"
+            target="_blank"
+            class="text-xl font-bold text-blue-600 hover:underline break-all"
+          >
+            Your URL will appear here...
+          </a>
+        </div>
+      </div>
+
+      <hr class="mb-8" />
+
+      <!-- Multiple Site IDs Input Section -->
+      <div>
+        <label for="multipleSiteIds" class="block text-gray-700 font-medium mb-2">
+          Paste multiple Mindbody Site IDs (one per line)
+        </label>
+        <textarea
+          id="multipleSiteIds"
+          rows="5"
+          class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="e.g. 12345&#10;67890&#10;..."
+        ></textarea>
+        <button
+          id="openAllLinks"
+          class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md"
+        >
+          Open All Links in Tabs
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Single Site ID URL Builder
+    const inputField = document.getElementById('siteId');
+    const generatedUrl = document.getElementById('generatedUrl');
+
+    function updateUrl() {
+      const siteId = inputField.value.trim();
+      if (siteId === "") {
+        generatedUrl.textContent = "Your URL will appear here...";
+        generatedUrl.href = "#";
+      } else {
+        const url = `https://brandedweb-next.mindbodyonline.com/components/bma/invite/${siteId}/111/2025-01-01/schedule?colorPrimary=%232d2d2d&colorSecondary=%23ff00ff&referrerName=John`;
+        generatedUrl.textContent = url;
+        generatedUrl.href = url;
+      }
+    }
+
+    inputField.addEventListener('input', updateUrl);
+
+    // Multiple Site IDs URL Opener
+    const multipleSiteIdsField = document.getElementById('multipleSiteIds');
+    const openAllLinksButton = document.getElementById('openAllLinks');
+
+    openAllLinksButton.addEventListener('click', () => {
+      const idsText = multipleSiteIdsField.value;
+      // Split text by newlines, trim, and filter out empty lines
+      const idsArray = idsText.split('\n').map(id => id.trim()).filter(id => id !== '');
+
+      idsArray.forEach(id => {
+        const url = `https://brandedweb-next.mindbodyonline.com/components/bma/invite/${id}/111/2025-01-01/schedule?colorPrimary=%232d2d2d&colorSecondary=%23ff00ff&referrerName=John`;
+        window.open(url, '_blank');
+      });
+    });
+  </script>
+</body>
+</html>
