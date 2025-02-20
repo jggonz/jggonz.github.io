@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Parent Page - GA4 PostMessage POC</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K504P5G9P9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Replace G-XXXXXXXXXX with your actual GA4 Measurement ID.
+      gtag('config', 'G-K504P5G9P9');
+
+      // Listen for postMessage events from the iframe.
+      window.addEventListener("message", function(event) {
+        // For security, replace '*' with the expected origin of the child if known.
+        // Example: if (event.origin !== 'https://trusted-child-domain.com') return;
+        console.log("Parent received message:", event.data);
+        if (event.data && event.data.type === "GA_EVENT") {
+          // Forward the event to Google Analytics using the gtag API.
+          gtag('event', event.data.payload.eventName, event.data.payload.eventParams);
+          console.log("GA event sent:", event.data.payload);
+        }
+      }, false);
+    </script>
+  </head>
+  <body>
+    <h1>Parent Page</h1>
+    <p>This page contains an iframe that will send GA events via postMessage.</p>
+    <iframe src="child.html" width="600" height="400" title="Child iFrame"></iframe>
+  </body>
+</html>
