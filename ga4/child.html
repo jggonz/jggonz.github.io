@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Child iFrame Page - Send GA Event</title>
+    <script>
+      function sendEventToParent() {
+        // Create a simulated GA event payload.
+        const eventPayload = {
+          type: "GA_EVENT",
+          payload: {
+            eventName: "test_event_jg",
+            eventParams: {
+              value: 42,
+              label: "child_event_jg"
+            }
+          }
+        };
+        console.log("Child sending event to parent:", eventPayload);
+        // Send the event payload to the parent page.
+        // In production, replace '*' with the specific target origin.
+        window.parent.postMessage(eventPayload, "*");
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Child Page (iFrame)</h1>
+    <p>Click the button below to send a simulated GA event to the parent page.</p>
+    <button onclick="sendEventToParent()">Send GA Event</button>
+  </body>
+</html>
