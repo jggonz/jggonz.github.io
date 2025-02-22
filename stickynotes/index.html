@@ -59,7 +59,6 @@
       padding-right: 2rem;
       padding-bottom: 2rem;
       outline: none;
-      /* Font family will be set dynamically */
     }
     /* Folded corner effect */
     .sticky-note:after {
@@ -96,7 +95,7 @@
       cursor: grabbing;
       transition: none !important;
     }
-    /* Resize handle (outside the editable area) */
+    /* Resize handle (outside editable area) */
     .resize-handle {
       position: absolute;
       bottom: 0;
@@ -111,22 +110,21 @@
     #fontSelect {
       position: absolute;
       top: 16px;
-      left:340px;
+      left: 340px;
       z-index: 50;
-      background-color: #red;
-      /* Use same classes as buttons */
-      background-color: #dc2626; /* bg-red-600 */
+      background-color: #dc2626;
       transition: background 0.2s;
-      padding: 0.65rem 1rem;
+      padding: 0.55rem 1rem;
       border-radius: 0.25rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       color: white;
       font-size: 1rem;
       outline: none;
-      border: none;
+      border: 0px;
+      border-right: 16px solid transparent
     }
     #fontSelect:hover {
-      background-color: #b91c1c; /* bg-red-700 */
+      background-color: #b91c1c;
     }
   </style>
 </head>
@@ -142,7 +140,7 @@
         Auto Layout
       </button>
       <!-- Dropdown for font selection -->
-      <select id="fontSelect" class="absolute top-4 z-50 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow focus:outline-none">
+      <select id="fontSelect" class="absolute top-4 z-50" style="left:340px;">
         <option value="Roboto">Roboto</option>
         <option value="Open Sans">Open Sans</option>
         <option value="Lato">Lato</option>
@@ -201,7 +199,7 @@
       const regenerateButton = document.getElementById('regenerateButton');
       let boardOffsetX = 0, boardOffsetY = 0;
 
-      // Update font for all notes when selection changes
+      // When font changes, update all note fonts and code
       fontSelect.addEventListener('change', function() {
         currentFont = this.value;
         boardContent.querySelectorAll('.sticky-note').forEach(div => {
@@ -210,15 +208,25 @@
         updateCodePane();
       });
 
+      // updateCodePane now includes board offset info at the top.
       function updateCodePane() {
-        let code = `stickyNotes\nfont: "${currentFont}"\n`;
+        let code = `stickyNotes\nboard: (${Math.round(boardOffsetX)},${Math.round(boardOffsetY)})\nfont: "${currentFont}"\n`;
         notesData.forEach(note => {
           const safeContent = note.content.replace(/\n/g, "\\n");
           code += `  note ${note.id}: (${Math.round(note.x)},${Math.round(note.y)},${Math.round(note.width)},${Math.round(note.height)}): "${safeContent}"\n`;
         });
         codePane.value = code;
+        localStorage.setItem("stickyNotesCode", code);
       }
 
+      // On page load, restore from localStorage if available.
+      const savedCode = localStorage.getItem("stickyNotesCode");
+      if (savedCode) {
+        codePane.value = savedCode;
+        regenerateNotesFromCode();
+      }
+
+      // Create a new note container with content and a separate resize handle.
       function createStickyNote() {
         const noteId = noteCount;
         const container = document.createElement('div');
@@ -264,6 +272,7 @@
         updateCodePane();
       }
 
+      // Dragging the container
       function containerMouseDown(e) {
         if (e.target.classList.contains('resize-handle')) return;
         const container = e.currentTarget;
@@ -316,6 +325,7 @@
         document.addEventListener('mouseup', onMouseUp);
       }
 
+      // Resizing the container via the separate resize handle
       function containerResizeMouseDown(e) {
         e.stopPropagation();
         const container = e.currentTarget.parentElement;
@@ -341,6 +351,52 @@
         }
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
+      }
+
+      // Regenerate notes from generated code (including board offset, font, and notes)
+      function regenerateNotesFromCode() {
+        boardContent.querySelectorAll('.note-container').forEach(container => container.remove());
+        notesData = [];
+        noteCount = 0;
+        const code = codePane.value;
+        const lines = code.split("\n").filter(line => line.trim().length > 0);
+        // Expect first line "stickyNotes"
+        if (lines.length > 0 && lines[0] !== "stickyNotes") return;
+        // Check if second line is board offset
+        if (lines.length > 1 && lines[1].startsWith("board:")) {
+          const boardMatch = lines[1].match(/^board:\s*\((-?\d+),\s*(-?\d+)\)$/);
+          if (boardMatch) {
+            boardOffsetX = parseInt(boardMatch[1]);
+            boardOffsetY = parseInt(boardMatch[2]);
+            boardContent.style.transform = `translate(${boardOffsetX}px, ${boardOffsetY}px)`;
+          }
+          lines.splice(1, 1);
+        }
+        // Next, check for font line
+        if (lines.length > 1 && lines[1].startsWith("font:")) {
+          const fontMatch = lines[1].match(/^font:\s*["']?(.+?)["']?$/);
+          if (fontMatch) {
+            currentFont = fontMatch[1];
+            fontSelect.value = currentFont;
+          }
+          lines.splice(1, 1);
+        }
+        const regex = /^note\s+(\d+):\s*\((-?\d+),\s*(-?\d+),\s*(\d+),\s*(\d+)\):\s*"((?:\\.|[^"\\])*)"$/;
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          const match = line.match(regex);
+          if (match) {
+            const id = parseInt(match[1]);
+            const x = parseInt(match[2]);
+            const y = parseInt(match[3]);
+            const width = parseInt(match[4]);
+            const height = parseInt(match[5]);
+            const content = match[6].replace(/\\n/g, "\n");
+            createNoteFromData({ id, x, y, width, height, content });
+          }
+        }
+        updateCodePane();
       }
 
       function createNoteFromData(noteData) {
@@ -384,53 +440,20 @@
         });
       }
 
-      function regenerateNotesFromCode() {
-        boardContent.querySelectorAll('.note-container').forEach(container => container.remove());
-        notesData = [];
-        noteCount = 0;
-        const code = codePane.value;
-        const lines = code.split("\n");
-        // If a font line exists, update currentFont and the dropdown.
-        if (lines.length > 1 && lines[1].startsWith("font:")) {
-          const fontMatch = lines[1].match(/^font:\s*["']?(.+?)["']?$/);
-          if (fontMatch) {
-            currentFont = fontMatch[1];
-            fontSelect.value = currentFont;
-          }
-          lines.splice(1, 1);
-        }
-        const regex = /^note\s+(\d+):\s*\((-?\d+),\s*(-?\d+),\s*(\d+),\s*(\d+)\):\s*"((?:\\.|[^"\\])*)"$/;
-        for (let i = 1; i < lines.length; i++) {
-          const line = lines[i].trim();
-          if (!line) continue;
-          const match = line.match(regex);
-          if (match) {
-            const id = parseInt(match[1]);
-            const x = parseInt(match[2]);
-            const y = parseInt(match[3]);
-            const width = parseInt(match[4]);
-            const height = parseInt(match[5]);
-            const content = match[6].replace(/\\n/g, "\n");
-            createNoteFromData({ id, x, y, width, height, content });
-          }
-        }
-        updateCodePane();
-      }
-
-      // Row-based auto layout with fixed gutter on all sides
+      // Row-based auto layout with fixed gutter
       function autoLayoutNotes() {
         const containers = boardContent.querySelectorAll('.note-container');
         containers.forEach(container => {
           container.style.transition = "left 0.5s ease, top 0.5s ease, transform 0.2s ease, box-shadow 0.2s ease";
         });
         const gutter = 20;
-        const containerWidth = board.clientWidth;
+        const boardWidth = board.clientWidth;
         let currentX = gutter, currentY = gutter, rowMaxHeight = 0;
         containers.forEach(container => {
           const rect = container.getBoundingClientRect();
           const noteWidth = rect.width;
           const noteHeight = rect.height;
-          if (currentX + noteWidth + gutter > containerWidth) {
+          if (currentX + noteWidth + gutter > boardWidth) {
             currentX = gutter;
             currentY += rowMaxHeight + gutter;
             rowMaxHeight = 0;
@@ -476,6 +499,7 @@
         boardContent.style.transform = `translate(${boardOffsetX}px, ${boardOffsetY}px)`;
         panStartX = e.clientX;
         panStartY = e.clientY;
+        updateCodePane();
       });
       document.addEventListener('mouseup', () => { if (isPanning) isPanning = false; });
       document.addEventListener('dragstart', (e) => { e.preventDefault(); });
