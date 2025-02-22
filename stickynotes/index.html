@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bulletin Board Sticky Notes</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
+  <style>
+    /* Reset margins and paddings */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+    /* Corkboard background on the board viewport */
+    #board {
+      background-color: #a67c52;
+      background-image:
+        radial-gradient(circle at 10px 10px, rgba(0,0,0,0.3) 1px, transparent 0),
+        radial-gradient(circle at 30px 30px, rgba(255,255,255,0.15) 1px, transparent 0),
+        repeating-linear-gradient(45deg,
+          transparent,
+          transparent 2px,
+          rgba(0,0,0,0.05) 2px,
+          rgba(0,0,0,0.05) 4px);
+      background-size: 50px 50px, 50px 50px, 100px 100px;
+      background-blend-mode: multiply;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+      transition: background 0.5s ease-in-out;
+      animation: corkDrift 60s infinite alternate;
+      position: relative;
+    }
+    @keyframes corkDrift {
+      from { background-position: 0 0, 0 0, 0 0; }
+      to { background-position: 200px 200px, 100px 100px, 100px 100px; }
+    }
+    /* The panned container for sticky notes */
+    #boardContent {
+      position: absolute;
+      inset: 0;
+    }
+    /* Note container holds an editable content area and a resize handle */
+    .note-container {
+      position: absolute;
+      transition: left 0.5s ease, top 0.5s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 0.25rem;
+      overflow: hidden;
+    }
+    /* Editable content area takes full container size */
+    .sticky-note {
+      background-color: #FFFB7D;
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+      padding-right: 2rem;
+      padding-bottom: 2rem;
+      outline: none;
+    }
+    /* Folded corner effect on content */
+    .sticky-note:after {
+      content: "";
+      position: absolute;
+      bottom: -2em;
+      left: 0;
+      right: 2em;
+      border-width: 1em;
+      border-style: solid;
+      border-color: #FFFB7D;
+    }
+    .sticky-note:before {
+      content: "";
+      position: absolute;
+      bottom: -2em;
+      right: 0;
+      border-width: 2em 2em 0 0;
+      border-style: solid;
+      border-color: #F6D02F;
+    }
+    /* Pop-in animation */
+    .pop-in {
+      animation: popIn 0.3s ease-out;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    /* Dragging effect for containers */
+    .dragging {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      cursor: grabbing;
+      transition: none !important;
+    }
+    /* Resize handle positioned outside the editable area */
+    .resize-handle {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;
+      cursor: se-resize;
+      background: rgba(0,0,0,0.2);
+      z-index: inherit;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Layout: flex container with board and right pane -->
+  <div class="flex h-screen">
+    <!-- Bulletin board viewport -->
+    <div id="board" class="flex-1 overflow-hidden">
+      <!-- Buttons -->
+      <button id="addNoteButton" class="absolute top-4 left-4 z-50 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow focus:outline-none">Add Sticky Note</button>
+      <button id="autoLayoutButton" class="absolute top-4 left-48 z-50 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow focus:outline-none">Auto Layout</button>
+      <!-- Container for note containers -->
+      <div id="boardContent"></div>
+    </div>
+    <!-- Right-hand pane for generated code; now a flex column to auto-fit the textarea -->
+    <div id="pane" class="w-1/4 bg-white border-l border-gray-300 p-4 overflow-auto flex flex-col">
+      <h2 class="text-xl font-bold mb-2">Generated Code</h2>
+      <textarea id="codePane" class="w-full flex-1 border p-2 font-mono resize-none"></textarea>
+      <button id="regenerateButton" class="mt-2 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded">Regenerate Notes</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let notesData = []; // { id, x, y, width, height, content }
+      let noteCount = 0;
+      const board = document.getElementById('board');
+      const boardContent = document.getElementById('boardContent');
+      const addNoteButton = document.getElementById('addNoteButton');
+      const autoLayoutButton = document.getElementById('autoLayoutButton');
+      const codePane = document.getElementById('codePane');
+      const regenerateButton = document.getElementById('regenerateButton');
+      let boardOffsetX = 0, boardOffsetY = 0;
+
+      function updateCodePane() {
+        let code = "stickyNotes\n";
+        notesData.forEach(note => {
+          const safeContent = note.content.replace(/\n/g, "\\n");
+          code += `  note ${note.id}: (${Math.round(note.x)},${Math.round(note.y)},${Math.round(note.width)},${Math.round(note.height)}): "${safeContent}"\n`;
+        });
+        codePane.value = code;
+      }
+
+      // Create a new note container with an editable content area and a separate resize handle.
+      function createStickyNote() {
+        const noteId = noteCount;
+        const container = document.createElement('div');
+        container.classList.add('note-container', 'pop-in');
+        container.setAttribute('data-id', noteId);
+        container.style.left = "20px";
+        container.style.top = "20px";
+        container.style.width = "200px";
+        container.style.height = "200px";
+
+        const contentDiv = document.createElement('div');
+        contentDiv.classList.add('sticky-note');
+        contentDiv.setAttribute('contenteditable', 'true');
+        contentDiv.innerText = "";
+        contentDiv.addEventListener('input', function() {
+          const id = parseInt(container.getAttribute('data-id'));
+          const data = notesData.find(n => n.id === id);
+          if (data) {
+            data.content = contentDiv.innerText;
+            // Auto-resize container vertically if needed
+            const newHeight = contentDiv.scrollHeight;
+            if (newHeight > parseFloat(container.style.height)) {
+              container.style.height = newHeight + "px";
+              data.height = Math.round(newHeight);
+            }
+            updateCodePane();
+          }
+        });
+
+        const resizeHandle = document.createElement('div');
+        resizeHandle.classList.add('resize-handle');
+        resizeHandle.addEventListener('mousedown', containerResizeMouseDown);
+
+        container.appendChild(contentDiv);
+        container.appendChild(resizeHandle);
+        container.addEventListener('mousedown', containerMouseDown);
+
+        boardContent.appendChild(container);
+        notesData.push({ id: noteId, x: 20, y: 20, width: 200, height: 200, content: "" });
+        noteCount++;
+        container.addEventListener('animationend', () => container.classList.remove('pop-in'));
+        updateCodePane();
+      }
+
+      // Dragging the container
+      function containerMouseDown(e) {
+        if (e.target.classList.contains('resize-handle')) return;
+        const container = e.currentTarget;
+        const boardRect = board.getBoundingClientRect();
+        let containerX = parseFloat(container.style.left);
+        let containerY = parseFloat(container.style.top);
+        const startX = e.clientX, startY = e.clientY;
+        let dragStarted = false;
+        let shiftX = 0, shiftY = 0;
+        const dragDelay = 150;
+        function startDrag(e) {
+          dragStarted = true;
+          shiftX = e.clientX - (boardRect.left + boardOffsetX + containerX);
+          shiftY = e.clientY - (boardRect.top + boardOffsetY + containerY);
+          container.classList.add('dragging');
+          document.addEventListener('mousemove', onMouseMove);
+        }
+        function onThresholdMove(e) {
+          if (Math.abs(e.clientX - startX) > 5 || Math.abs(e.clientY - startY) > 5) {
+            clearTimeout(dragTimer);
+            if (!dragStarted) startDrag(e);
+            document.removeEventListener('mousemove', onThresholdMove);
+          }
+        }
+        function onMouseMove(e) {
+          if (!dragStarted) return;
+          const newX = e.clientX - boardRect.left - boardOffsetX - shiftX;
+          const newY = e.clientY - boardRect.top - boardOffsetY - shiftY;
+          container.style.left = newX + "px";
+          container.style.top = newY + "px";
+        }
+        function onMouseUp() {
+          clearTimeout(dragTimer);
+          document.removeEventListener('mousemove', onThresholdMove);
+          document.removeEventListener('mousemove', onMouseMove);
+          if (dragStarted) {
+            container.classList.remove('dragging');
+            const id = parseInt(container.getAttribute('data-id'));
+            const data = notesData.find(n => n.id === id);
+            if (data) {
+              data.x = Math.round(parseFloat(container.style.left));
+              data.y = Math.round(parseFloat(container.style.top));
+              updateCodePane();
+            }
+          }
+          document.removeEventListener('mouseup', onMouseUp);
+        }
+        const dragTimer = setTimeout(() => { if (!dragStarted) startDrag(e); }, dragDelay);
+        document.addEventListener('mousemove', onThresholdMove);
+        document.addEventListener('mouseup', onMouseUp);
+      }
+
+      // Resizing the container via the resize handle
+      function containerResizeMouseDown(e) {
+        e.stopPropagation();
+        const container = e.currentTarget.parentElement;
+        const startX = e.clientX, startY = e.clientY;
+        const startWidth = parseFloat(window.getComputedStyle(container).width);
+        const startHeight = parseFloat(window.getComputedStyle(container).height);
+        function onMouseMove(e) {
+          const newWidth = Math.max(100, startWidth + (e.clientX - startX));
+          const newHeight = Math.max(100, startHeight + (e.clientY - startY));
+          container.style.width = newWidth + "px";
+          container.style.height = newHeight + "px";
+        }
+        function onMouseUp() {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+          const id = parseInt(container.getAttribute('data-id'));
+          const data = notesData.find(n => n.id === id);
+          if (data) {
+            data.width = Math.round(parseFloat(container.style.width));
+            data.height = Math.round(parseFloat(container.style.height));
+            updateCodePane();
+          }
+        }
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      }
+
+      function createNoteFromData(noteData) {
+        const container = document.createElement('div');
+        container.classList.add('note-container');
+        container.setAttribute('data-id', noteData.id);
+        container.style.left = noteData.x + "px";
+        container.style.top = noteData.y + "px";
+        container.style.width = noteData.width + "px";
+        container.style.height = noteData.height + "px";
+
+        const contentDiv = document.createElement('div');
+        contentDiv.classList.add('sticky-note');
+        contentDiv.setAttribute('contenteditable', 'true');
+        contentDiv.innerText = noteData.content;
+
+        const resizeHandle = document.createElement('div');
+        resizeHandle.classList.add('resize-handle');
+        resizeHandle.addEventListener('mousedown', containerResizeMouseDown);
+
+        container.appendChild(contentDiv);
+        container.appendChild(resizeHandle);
+        container.addEventListener('mousedown', containerMouseDown);
+        boardContent.appendChild(container);
+        notesData.push(noteData);
+        noteCount = Math.max(noteCount, noteData.id + 1);
+
+        contentDiv.addEventListener('input', function() {
+          const id = parseInt(container.getAttribute('data-id'));
+          const data = notesData.find(n => n.id === id);
+          if (data) {
+            data.content = contentDiv.innerText;
+            // Auto-resize container vertically if content grows
+            const newHeight = contentDiv.scrollHeight;
+            if (newHeight > parseFloat(container.style.height)) {
+              container.style.height = newHeight + "px";
+              data.height = Math.round(newHeight);
+            }
+            updateCodePane();
+          }
+        });
+      }
+
+      function regenerateNotesFromCode() {
+        boardContent.querySelectorAll('.note-container').forEach(container => container.remove());
+        notesData = [];
+        noteCount = 0;
+        const code = codePane.value;
+        const lines = code.split("\n");
+        const regex = /^note\s+(\d+):\s*\((-?\d+),\s*(-?\d+),\s*(\d+),\s*(\d+)\):\s*"((?:\\.|[^"\\])*)"$/;
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+          const match = line.match(regex);
+          if (match) {
+            const id = parseInt(match[1]);
+            const x = parseInt(match[2]);
+            const y = parseInt(match[3]);
+            const width = parseInt(match[4]);
+            const height = parseInt(match[5]);
+            const content = match[6].replace(/\\n/g, "\n");
+            createNoteFromData({ id, x, y, width, height, content });
+          }
+        }
+        updateCodePane();
+      }
+
+      // Row-based auto layout with fixed gutter on all sides
+      function autoLayoutNotes() {
+        const containers = boardContent.querySelectorAll('.note-container');
+        containers.forEach(container => {
+          container.style.transition = "left 0.5s ease, top 0.5s ease, transform 0.2s ease, box-shadow 0.2s ease";
+        });
+        const gutter = 20;
+        const containerWidth = board.clientWidth;
+        let currentX = gutter, currentY = gutter, rowMaxHeight = 0;
+        containers.forEach(container => {
+          const rect = container.getBoundingClientRect();
+          const noteWidth = rect.width;
+          const noteHeight = rect.height;
+          if (currentX + noteWidth + gutter > containerWidth) {
+            currentX = gutter;
+            currentY += rowMaxHeight + gutter;
+            rowMaxHeight = 0;
+          }
+          container.style.left = currentX + "px";
+          container.style.top = currentY + "px";
+          const id = parseInt(container.getAttribute('data-id'));
+          const data = notesData.find(n => n.id === id);
+          if (data) {
+            data.x = Math.round(currentX);
+            data.y = Math.round(currentY);
+          }
+          currentX += noteWidth + gutter;
+          rowMaxHeight = Math.max(rowMaxHeight, noteHeight);
+        });
+        updateCodePane();
+        setTimeout(() => {
+          containers.forEach(container => {
+            container.style.transition = "transform 0.2s ease, box-shadow 0.2s ease";
+          });
+        }, 600);
+      }
+
+      addNoteButton.addEventListener('click', createStickyNote);
+      autoLayoutButton.addEventListener('click', autoLayoutNotes);
+      regenerateButton.addEventListener('click', regenerateNotesFromCode);
+
+      // Infinite board panning
+      let isPanning = false, panStartX = 0, panStartY = 0;
+      board.addEventListener('mousedown', (e) => {
+        if (e.target === board || e.target === boardContent) {
+          isPanning = true;
+          panStartX = e.clientX;
+          panStartY = e.clientY;
+        }
+      });
+      document.addEventListener('mousemove', (e) => {
+        if (!isPanning) return;
+        const dx = e.clientX - panStartX;
+        const dy = e.clientY - panStartY;
+        boardOffsetX += dx;
+        boardOffsetY += dy;
+        boardContent.style.transform = `translate(${boardOffsetX}px, ${boardOffsetY}px)`;
+        panStartX = e.clientX;
+        panStartY = e.clientY;
+      });
+      document.addEventListener('mouseup', () => { if (isPanning) isPanning = false; });
+      document.addEventListener('dragstart', (e) => { e.preventDefault(); });
+    });
+  </script>
+</body>
+</html>
