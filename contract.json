@@ -1,0 +1,67 @@
+{
+  "Contracts": [
+    {
+      "ActionUponCompletionOfAutopays": "ContractAutomaticallyRenews",
+      "AgreementTerms": "<div>These are terms that are set in admin.</div>",
+      "AssignsMembershipId": null,
+      "AssignsMembershipName": null,
+      "AutopayEnabled": true,
+      "AutopaySchedule": {
+        "FrequencyTimeUnit": "Weekly",
+        "FrequencyType": "SetNumberOfAutopays",
+        "FrequencyValue": 1
+      },
+      "AutopayTriggerType": "OnSetSchedule",
+      "ClientTerminateOnline": false,
+      "ClientsChargedOn": "LastDayOfTheMonth",
+      "ClientsChargedOnSpecificDate": null,
+      "ContractItems": [
+        {
+          "Description": "",
+          "Id": "404",
+          "Name": "Yoga Teacher Training",
+          "OneTimeItem": false,
+          "Price": 5.0,
+          "Quantity": 1,
+          "Type": "ServicePricingOption"
+        }
+      ],
+      "DepositAmount": 0.0,
+      "Description": "<div>This is a contract that is available online. This is a description available in admin.</div>",
+      "DiscountAmount": 0.0,
+      "FirstAutopayFree": false,
+      "FirstPaymentAmountSubtotal": 5.0,
+      "FirstPaymentAmountTax": 0.75,
+      "FirstPaymentAmountTotal": 5.75,
+      "Id": 155,
+      "IntroOffer": "None",
+      "LastAutopayFree": false,
+      "LocationPurchaseRestrictionIds": [
+        1,
+        2
+      ],
+      "LocationPurchaseRestrictionNames": null,
+      "MembershipTypeRestrictions": [],
+      "Name": "Yoga Daily",
+      "NumberOfAutopays": 24,
+      "NumberOfPromoAutopays": null,
+      "PromoPaymentAmountSubtotal": null,
+      "PromoPaymentAmountTax": null,
+      "PromoPaymentAmountTotal": null,
+      "RecurringPaymentAmountSubtotal": 5.0,
+      "RecurringPaymentAmountTax": 0.75,
+      "RecurringPaymentAmountTotal": 5.75,
+      "RequiresElectronicConfirmation": false,
+      "SoldOnline": true,
+      "TotalContractAmountSubtotal": 120.0,
+      "TotalContractAmountTax": 18.0,
+      "TotalContractAmountTotal": 138.0
+    }
+  ],
+  "PaginationResponse": {
+    "PageSize": 1,
+    "RequestedLimit": 100,
+    "RequestedOffset": 0,
+    "TotalResults": 1
+  }
+}
